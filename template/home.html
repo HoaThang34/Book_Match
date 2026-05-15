@@ -1,0 +1,315 @@
+<!DOCTYPE html><html class="light" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>AI Reader - Home</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "inverse-primary": "#ffb693",
+                "error-container": "#ffdad6",
+                "background": "#f9f9ff",
+                "surface-container-low": "#f0f3ff",
+                "on-primary-container": "#572000",
+                "primary-fixed-dim": "#ffb693",
+                "on-secondary-fixed-variant": "#4500d8",
+                "surface-bright": "#f9f9ff",
+                "secondary": "#4000cc",
+                "on-error-container": "#93000a",
+                "surface-container-highest": "#d8e3fb",
+                "on-background": "#111c2d",
+                "secondary-fixed": "#e5deff",
+                "error": "#ba1a1a",
+                "on-primary-fixed": "#351000",
+                "on-primary-fixed-variant": "#7a3000",
+                "on-surface-variant": "#5a4136",
+                "surface-container": "#e7eeff",
+                "on-primary": "#ffffff",
+                "tertiary-fixed-dim": "#75d1ff",
+                "secondary-fixed-dim": "#c9bfff",
+                "on-tertiary-fixed": "#001e2b",
+                "outline-variant": "#e2bfb0",
+                "tertiary-fixed": "#c2e8ff",
+                "secondary-container": "#581cff",
+                "on-error": "#ffffff",
+                "on-secondary-fixed": "#1b0063",
+                "surface-container-high": "#dee8ff",
+                "inverse-on-surface": "#ecf1ff",
+                "tertiary-container": "#00a5d9",
+                "on-tertiary": "#ffffff",
+                "on-tertiary-container": "#003649",
+                "surface-variant": "#d8e3fb",
+                "on-secondary-container": "#d4cbff",
+                "primary": "#a04100",
+                "primary-container": "#ff6b00",
+                "on-tertiary-fixed-variant": "#004d67",
+                "surface-tint": "#a04100",
+                "inverse-surface": "#263143",
+                "outline": "#8e7164",
+                "tertiary": "#006688",
+                "surface": "#f9f9ff",
+                "on-secondary": "#ffffff",
+                "on-surface": "#111c2d",
+                "surface-dim": "#cfdaf2",
+                "surface-container-lowest": "#ffffff",
+                "primary-fixed": "#ffdbcc"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "sm": "12px",
+                "lg": "40px",
+                "xs": "4px",
+                "margin-desktop": "48px",
+                "base": "8px",
+                "md": "24px",
+                "xl": "64px",
+                "margin-mobile": "16px",
+                "gutter": "24px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Montserrat"
+                ],
+                "label-lg": [
+                        "Montserrat"
+                ],
+                "headline-lg": [
+                        "Montserrat"
+                ],
+                "headline-md": [
+                        "Montserrat"
+                ],
+                "label-sm": [
+                        "Montserrat"
+                ],
+                "headline-lg-mobile": [
+                        "Montserrat"
+                ],
+                "display-lg": [
+                        "Montserrat"
+                ],
+                "body-lg": [
+                        "Montserrat"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-lg": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-sm": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "500"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "34px",
+                                "fontWeight": "700"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
+<body class="bg-background text-on-background antialiased pb-32">
+<!-- TopAppBar -->
+<header class="bg-background-light/95 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant/10 px-4">
+<div class="flex items-center justify-between px-margin-mobile h-16 w-full max-w-[720px] mx-auto"><div class="flex items-center justify-between w-full h-16">
+    <div class="flex items-center gap-4">
+        <button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h1 class="font-display font-bold text-xl text-primary">AI Reader</h1>
+    </div>
+    <div class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
+        <span class="text-sm font-semibold text-primary">5 Days</span>
+        <span class="text-sm">✨</span>
+    </div>
+</div></div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-[720px] mx-auto px-margin-mobile pt-24 space-y-md">
+<div class="flex items-baseline justify-between pt-4 pb-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Các đề xuất hôm nay</h2>
+</div>
+<div class="space-y-lg">
+<!-- Book Card 1 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 relative group">
+<div class="h-64 w-full bg-surface-variant relative">
+<img alt="Book Cover" class="w-full h-full object-cover opacity-90 transition-all duration-500" data-alt="A highly detailed close-up of a modern, intellectual book cover with an abstract geometric design. The lighting is dramatic and moody, casting soft shadows across the textured paper surface. Deep blacks and pristine whites dominate the palette, highlighted by a subtle glowing orange accent reflecting the high-contrast gamification style. The overall aesthetic is scholarly yet energetic and technologically advanced." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-mMrQeg0v6lBpze6JiP0w59byCbsWlkkYZhnud8oXzMjxwKvaJ8x63Xd4Z9sOlKOKNM26xzpxr1HajtokmsFdtxTsqnRk-dlGU7m8GhYbhgSaRiFNpTwGw5H72DhC6qk9vkwyggRezEo-M83KJvHkov1MTQHxM0BhMWyenw42loVyYAesb7bcR9poaqpUBsRIvtsceBOhh7HYyaJChJoVn3Py8fjXWCzC7EIsO5uuK_NcSP7MSRkartNDeNPzdzPzFeXq9wRMpJs">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
+                        98% AI Match
+                    </div>
+</div>
+<div class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Tư Duy Nhanh Và Chậm</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Daniel Kahneman</p>
+<p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
+                        Cuốn sách khám phá hai hệ thống chi phối cách chúng ta suy nghĩ: Hệ thống 1 nhanh, trực giác và cảm xúc; Hệ thống 2 chậm, có chủ ý và logic. Hiểu rõ chúng giúp ta đưa ra quyết định tốt hơn trong cuộc sống và công việc.
+                    </p>
+<div class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
+<h4 class="font-label-lg text-label-lg text-primary">Tại sao nó phù hợp với bạn</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">
+                            Dựa trên lịch sử đọc về tâm lý học hành vi và mục tiêu cải thiện khả năng ra quyết định chiến lược của bạn trong tuần này.
+                        </p>
+</div>
+</div>
+</article>
+<!-- Book Card 2 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 relative group">
+<div class="h-64 w-full bg-surface-variant relative">
+<img alt="Book Cover" class="w-full h-full object-cover opacity-90 transition-all duration-500" data-alt="An artistic, slightly out-of-focus shot of a stack of hardcover books resting on a sleek dark wooden desk. A single beam of energetic, high-contrast orange light cuts across the dark room, illuminating the spine of the top book. The scene embodies a modern corporate yet deeply scholarly mood, with deep shadowy undertones to reduce visual fatigue." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6nVuDBAb0EZbVlVs2GeFA3bg8szeDTE9ogv64vjLPxwake-nYaawwd6VK1Lq-Ty38p_fyldzV1IhHckur_57XRLSy-ts9MmhrJKYQQ8IYeTTpZ0n0cuABvRVwkKIsPFgMNlCRtDRWC-9me3TO2JnOmGKThvzSxawzGX0WYdympWpaevT5ZQ-uyX6b2h84P7kGuNb1Gu7Bvq2M5_qSzliLdUdrF12w_kjf3QqOwucrENtns7L3e-31W6gNUlU1roB2h37rkD-TCts">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
+                        92% AI Match
+                    </div>
+</div>
+<div class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Deep Work</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Cal Newport</p>
+<p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
+                        Quy tắc cho sự thành công tập trung trong một thế giới phân tán. Khám phá cách rèn luyện khả năng tập trung sâu độ để tạo ra giá trị đột phá và hoàn thành các nhiệm vụ phức tạp nhanh chóng hơn.
+                    </p>
+<div class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
+<h4 class="font-label-lg text-label-lg text-primary">Tại sao nó phù hợp với bạn</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">
+                            Phân tích dữ liệu cho thấy bạn thường mất tập trung sau 20 phút. Cuốn sách này cung cấp các phương pháp thực tế để kéo dài chuỗi Focus của bạn.
+                        </p>
+</div>
+</div>
+</article>
+<!-- Book Card 3 -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 relative group">
+<div class="h-64 w-full bg-surface-variant relative">
+<img alt="Book Cover" class="w-full h-full object-cover opacity-90 transition-all duration-500" data-alt="A minimalist overhead view of a modern reading setup. A sleek e-reader device sits next to a steaming cup of coffee on a dark, textured slate table. Soft, glowing ambient light creates subtle gradients, while small bright UI elements on the e-reader screen introduce pops of vibrant color. The mood is immersive, focused, and technologically enhanced for long reading sessions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDbLnzy_LPQ1hwwnU_4CSwo58VzAsD83gUEDRNPViRI9li-ICD52KXXp5n2Ip746v5uv_dFyY8zK5HjEYYzoQ93x0N-XxLlr-pjHPRVrziVlRcGtVmrw0nwWRLoBswukbW1MB6sHgROgoMtdR29VhgagfcPbGNuJXeVm83P1TWWk0dig8hEXMfGJOv2c8SnZfbbXS30_wLljja178OAp1FVhP_XtwS6vi7w9NTpltRy9rlVx2NirdegFQ4LzoKpeerqXw57j88ygE">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
+                        88% AI Match
+                    </div>
+</div>
+<div class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Atomic Habits</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">James Clear</p>
+<p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
+                        Thay đổi nhỏ, hiệu quả bất ngờ. Hướng dẫn toàn diện để phá vỡ thói quen xấu và xây dựng những thói quen tốt thông qua những cải tiến 1% mỗi ngày, áp dụng cho mọi khía cạnh cuộc sống.
+                    </p>
+<div class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
+<h4 class="font-label-lg text-label-lg text-primary">Tại sao nó phù hợp với bạn</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">
+                            Đồng bộ hoàn hảo với mục tiêu duy trì "Chuỗi 5 ngày" hiện tại của bạn. Cung cấp nền tảng lý thuyết cho hệ thống gamification bạn đang trải nghiệm.
+                        </p>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Fixed Bottom CTA -->
+<div class="fixed bottom-[72px] md:bottom-0 w-full z-40 bg-gradient-to-t from-background via-background/90 to-transparent pt-12 pb-6 px-margin-mobile pointer-events-none">
+<div class="max-w-[720px] mx-auto pointer-events-auto">
+<button class="w-full bg-primary-container text-on-primary-container font-label-lg text-label-lg uppercase tracking-wider py-4 rounded-xl shadow-lg hover:bg-primary hover:text-on-primary transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2 border border-transparent">
+<span class="material-symbols-outlined icon-fill text-[20px]">play_circle</span>
+                Bắt đầu mục tiêu đọc sách 15 phút
+            </button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="bg-background-light/95 fixed bottom-0 w-full z-50 backdrop-blur-md border-t border-outline-variant/10 md:hidden">
+<div class="flex justify-around items-center w-full px-4 py-3 max-w-[720px] mx-auto"><button class="flex flex-col items-center justify-center gap-1 flex-1 text-primary">
+    <span class="material-symbols-outlined icon-fill">home</span>
+    <span class="text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 flex-1 text-on-surface-variant hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">search</span>
+    <span class="text-[10px] font-semibold uppercase tracking-wider">Discover</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 flex-1 text-on-surface-variant hover:text-primary transition-colors">
+    <span class="material-symbols-outlined">timer</span>
+    <span class="text-[10px] font-semibold uppercase tracking-wider">Focus</span>
+</button></div>
+</nav>
+
+
+</body></html>

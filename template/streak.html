@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>AI Reader - Streak Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fb",
+                        "primary-fixed-dim": "#ffb693",
+                        "tertiary-fixed": "#c2e8ff",
+                        "surface-container-high": "#dee8ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#c9bfff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d8e3fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#351000",
+                        "on-tertiary-fixed-variant": "#004d67",
+                        "on-surface": "#111c2d",
+                        "on-background": "#111c2d",
+                        "secondary-container": "#581cff",
+                        "inverse-primary": "#ffb693",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f9f9ff",
+                        "primary": "#a04100",
+                        "tertiary-fixed-dim": "#75d1ff",
+                        "primary-container": "#ff6b00",
+                        "on-surface-variant": "#5a4136",
+                        "on-secondary-fixed-variant": "#4500d8",
+                        "outline": "#8e7164",
+                        "on-secondary-fixed": "#1b0063",
+                        "on-primary-container": "#572000",
+                        "inverse-surface": "#263143",
+                        "surface-tint": "#a04100",
+                        "inverse-on-surface": "#ecf1ff",
+                        "surface-dim": "#cfdaf2",
+                        "surface": "#f9f9ff",
+                        "secondary-fixed": "#e5deff",
+                        "outline-variant": "#e2bfb0",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f0f3ff",
+                        "primary-fixed": "#ffdbcc",
+                        "tertiary": "#006688",
+                        "secondary": "#4000cc",
+                        "on-tertiary-fixed": "#001e2b",
+                        "on-secondary-container": "#d4cbff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#003649",
+                        "tertiary-container": "#00a5d9",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "on-secondary": "#ffffff",
+                        "background": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "64px",
+                        "md": "24px",
+                        "lg": "40px",
+                        "sm": "12px",
+                        "margin-desktop": "48px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "body-md": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  <style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
+<body class="bg-background text-on-background min-h-screen pb-40">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm">
+<button class="text-on-surface-variant hover:bg-primary-container/10 transition-colors p-2 rounded-full flex items-center justify-center"><span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 0;">menu</span></button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">AI Reader</h1>
+<div class="flex items-center gap-1 bg-primary-container/10 px-3 py-1 rounded-full">
+  <span class="font-label-lg text-primary-container">5 Days</span>
+  <span class="material-symbols-outlined text-primary-container text-[20px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div> <!-- Spacer for centering -->
+</header>
+<main class="px-margin-mobile pt-md space-y-lg flex flex-col items-center">
+<!-- Header: Current Streak -->
+<section class="flex flex-col items-center justify-center text-center mt-md">
+<div class="relative inline-flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary-container text-[80px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary-container mb-xs">5</h2>
+<p class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-xs">Ngày Liên Tiếp</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Bạn đang làm rất tốt! Giữ vững phong độ nhé.</p>
+</section>
+<!-- Streak Calendar (Bento Grid Style) -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(30,41,59,0.05)] border border-surface-variant">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Tháng 10</h3>
+<div class="flex gap-2">
+<button class="p-1 rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center mb-sm">
+<div class="font-label-sm text-label-sm text-on-surface-variant">T2</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">T3</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">T4</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">T5</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">T6</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">T7</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">CN</div>
+</div>
+<!-- Calendar Days (Simulated) -->
+<div class="grid grid-cols-7 gap-2 text-center">
+<!-- Empty slots for offset -->
+<div></div><div></div>
+<!-- Past days (completed) -->
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container/10 text-primary-container relative">
+<span class="font-label-lg text-label-lg z-10">1</span>
+<span class="material-symbols-outlined absolute opacity-20 text-[24px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container/10 text-primary-container relative">
+<span class="font-label-lg text-label-lg z-10">2</span>
+<span class="material-symbols-outlined absolute opacity-20 text-[24px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<!-- Missed day -->
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant">
+<span class="font-label-lg text-label-lg">3</span>
+</div>
+<!-- Current Streak -->
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container text-on-primary relative shadow-md">
+<span class="font-label-lg text-label-lg z-10">4</span>
+<span class="material-symbols-outlined absolute -bottom-1 -right-1 text-on-primary text-[16px] drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container text-on-primary relative shadow-md">
+<span class="font-label-lg text-label-lg z-10">5</span>
+<span class="material-symbols-outlined absolute -bottom-1 -right-1 text-on-primary text-[16px] drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container text-on-primary relative shadow-md">
+<span class="font-label-lg text-label-lg z-10">6</span>
+<span class="material-symbols-outlined absolute -bottom-1 -right-1 text-on-primary text-[16px] drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<div class="aspect-square flex flex-col items-center justify-center rounded-full bg-primary-container text-on-primary relative shadow-md ring-2 ring-primary-container ring-offset-2">
+<span class="font-label-lg text-label-lg z-10">7</span>
+<span class="material-symbols-outlined absolute -bottom-1 -right-1 text-on-primary text-[16px] drop-shadow-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<!-- Future days -->
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant opacity-50">
+<span class="font-label-lg text-label-lg">8</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant opacity-50">
+<span class="font-label-lg text-label-lg">9</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant opacity-50">
+<span class="font-label-lg text-label-lg">10</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant opacity-50">
+<span class="font-label-lg text-label-lg">11</span>
+</div>
+<div class="aspect-square flex items-center justify-center rounded-full text-on-surface-variant opacity-50">
+<span class="font-label-lg text-label-lg">12</span>
+</div>
+</div>
+</section>
+<!-- Stats Grid (Bento Style) -->
+<section class="w-full grid grid-cols-2 gap-sm">
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(30,41,59,0.05)] border border-surface-variant flex flex-col items-start">
+<span class="material-symbols-outlined text-secondary-container mb-sm" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase tracking-wide">Tổng thời gian</p>
+<p class="font-headline-md text-headline-md text-on-surface">345<span class="font-label-sm text-label-sm ml-1 text-on-surface-variant normal-case">phút</span></p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(30,41,59,0.05)] border border-surface-variant flex flex-col items-start">
+<span class="material-symbols-outlined text-primary-container mb-sm" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase tracking-wide">Chuỗi Dài Nhất</p>
+<p class="font-headline-md text-headline-md text-on-surface">14<span class="font-label-sm text-label-sm ml-1 text-on-surface-variant normal-case">ngày</span></p>
+</div>
+<div class="col-span-2 bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(30,41,59,0.05)] border border-surface-variant flex flex-row items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs uppercase tracking-wide">Sách đã hoàn thành</p>
+<p class="font-headline-md text-headline-md text-on-surface">3<span class="font-label-sm text-label-sm ml-1 text-on-surface-variant normal-case">cuốn</span></p>
+</div>
+<span class="material-symbols-outlined text-tertiary text-4xl opacity-80" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+</section>
+<!-- Milestones -->
+<section class="w-full mb-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Mốc Sắp Tới</h3>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-[0_4px_20px_rgba(30,41,59,0.05)] border border-surface-variant flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface mb-xs">Người Đọc Cần Cù</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Đạt chuỗi 7 ngày liên tiếp</p>
+<!-- Progress Bar -->
+<div class="w-full bg-surface-variant rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 71%"></div>
+</div>
+<p class="font-label-sm text-label-sm text-right mt-1 text-primary-container">5/7 ngày</p>
+</div>
+</div>
+</section>
+<div class="h-10"></div> <!-- Bottom padding for fixed button -->
+</main>
+<!-- Floating Action Area (Bottom Fixed Button) -->
+<div class="fixed bottom-0 left-0 w-full z-50"><div class="p-margin-mobile bg-surface/90 backdrop-blur-md border-t border-surface-variant shadow-[0_-8px_30px_rgba(30,41,59,0.05)]">
+  <button class="w-full py-3 px-6 bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-lg transition-all flex items-center justify-center gap-2">
+    Tiếp tục đọc ngay
+    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+  </button>
+</div>
+<nav class="flex justify-around items-center h-16 bg-surface border-t border-surface-variant">
+  <button class="flex flex-col items-center gap-1 text-primary">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+    <span class="text-[10px] font-medium">Home</span>
+  </button>
+  <button class="flex flex-col items-center gap-1 text-on-surface-variant">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+    <span class="text-[10px] font-medium">Discover</span>
+  </button>
+  <button class="flex flex-col items-center gap-1 text-on-surface-variant">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">center_focus_strong</span>
+    <span class="text-[10px] font-medium">Focus</span>
+  </button>
+</nav></div>
+
+
+</body></html>

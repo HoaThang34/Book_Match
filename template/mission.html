@@ -1,0 +1,395 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Nhiệm vụ &amp; Danh hiệu - ReaderQuest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#d8e3fb",
+                    "tertiary-container": "#00a5d9",
+                    "primary-container": "#ff6b00",
+                    "on-tertiary-fixed": "#001e2b",
+                    "primary": "#a04100",
+                    "secondary-fixed": "#e5deff",
+                    "surface-dim": "#cfdaf2",
+                    "on-background": "#111c2d",
+                    "secondary-container": "#581cff",
+                    "inverse-surface": "#263143",
+                    "surface-variant": "#d8e3fb",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#75d1ff",
+                    "error": "#ba1a1a",
+                    "primary-fixed": "#ffdbcc",
+                    "on-surface-variant": "#5a4136",
+                    "background": "#f9f9ff",
+                    "on-primary-container": "#572000",
+                    "primary-fixed-dim": "#ffb693",
+                    "tertiary-fixed": "#c2e8ff",
+                    "surface-container-high": "#dee8ff",
+                    "outline": "#8e7164",
+                    "inverse-on-surface": "#ecf1ff",
+                    "on-secondary-fixed-variant": "#4500d8",
+                    "outline-variant": "#e2bfb0",
+                    "on-surface": "#111c2d",
+                    "tertiary": "#006688",
+                    "surface-tint": "#a04100",
+                    "surface-container-low": "#f0f3ff",
+                    "surface": "#f9f9ff",
+                    "on-secondary-container": "#d4cbff",
+                    "on-primary-fixed": "#351000",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#ffb693",
+                    "secondary-fixed-dim": "#c9bfff",
+                    "on-primary-fixed-variant": "#7a3000",
+                    "surface-bright": "#f9f9ff",
+                    "surface-container": "#e7eeff",
+                    "on-tertiary-container": "#003649",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#1b0063",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#004d67",
+                    "secondary": "#4000cc",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "xl": "64px",
+                    "margin-desktop": "48px",
+                    "md": "24px",
+                    "margin-mobile": "16px",
+                    "lg": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": [
+                            "Montserrat"
+                    ],
+                    "headline-lg-mobile": [
+                            "Montserrat"
+                    ],
+                    "headline-lg": [
+                            "Montserrat"
+                    ],
+                    "body-lg": [
+                            "Montserrat"
+                    ],
+                    "headline-md": [
+                            "Montserrat"
+                    ],
+                    "body-md": [
+                            "Montserrat"
+                    ],
+                    "display-lg": [
+                            "Montserrat"
+                    ],
+                    "label-lg": [
+                            "Montserrat"
+                    ]
+            },
+            "fontSize": {
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "34px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-lg": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F8FAFC;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  <style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
+<body class="text-on-background font-body-md bg-background pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-white/80 backdrop-blur-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">AI Reader</h1>
+</div>
+<div class="flex items-center gap-sm">
+<div class="flex items-center bg-surface-container px-3 py-1 rounded-full text-primary font-bold"><span class="mr-1">5 Days</span><span class="material-symbols-outlined text-primary-container" style="font-variation-settings: &quot;FILL&quot; 1;">local_fire_department</span></div>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Header Text -->
+<div class="col-span-1 md:col-span-12 mb-lg">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Nhiệm vụ &amp; Danh hiệu</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Hoàn thành mục tiêu để mở khóa phần thưởng.</p>
+</div>
+<!-- Left Column: Quests -->
+<div class="col-span-1 md:col-span-8 flex flex-col gap-xl">
+<!-- Daily Quests -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">calendar_today</span>
+                        Nhiệm vụ hàng ngày
+                    </h3>
+<span class="font-label-lg text-label-lg text-primary-container bg-primary-container/10 px-3 py-1 rounded-full">Còn 12 giờ</span>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Quest Card 1 (Completed) -->
+<div class="bg-white rounded-xl p-md shadow-[0px_4px_20px_rgba(30,41,59,0.05)] border border-[#F1F5F9] flex items-center gap-md">
+<div class="bg-primary-container/10 text-primary-container rounded-full p-3 flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface line-through text-on-surface-variant">Đọc 15 phút</h4>
+<div class="mt-2 w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="font-label-lg text-label-lg text-primary-container font-bold">+50 XP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Đã nhận</span>
+</div>
+</div>
+<!-- Quest Card 2 (In Progress) -->
+<div class="bg-white rounded-xl p-md shadow-[0px_4px_20px_rgba(30,41,59,0.05)] border border-[#F1F5F9] flex items-center gap-md relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary-container"></div>
+<div class="bg-surface-container text-on-surface-variant rounded-full p-3 flex-shrink-0">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface">Hoàn thành 1 chương</h4>
+<div class="flex justify-between items-center mt-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tiến độ</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">0/1</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 0%"></div>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="font-label-lg text-label-lg text-primary font-bold">+100 XP</span>
+<button class="mt-2 font-label-sm text-label-sm text-white bg-primary-container px-3 py-1 rounded-full hover:opacity-90 transition-opacity">Bắt đầu</button>
+</div>
+</div>
+<!-- Quest Card 3 (In Progress) -->
+<div class="bg-white rounded-xl p-md shadow-[0px_4px_20px_rgba(30,41,59,0.05)] border border-[#F1F5F9] flex items-center gap-md relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary-container"></div>
+<div class="bg-surface-container text-on-surface-variant rounded-full p-3 flex-shrink-0">
+<span class="material-symbols-outlined">format_quote</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-label-lg text-label-lg text-on-surface">Lưu 5 trích dẫn</h4>
+<div class="flex justify-between items-center mt-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tiến độ</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2/5</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 40%"></div>
+</div>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="font-label-lg text-label-lg text-primary font-bold">+75 XP</span>
+<button class="mt-2 font-label-sm text-label-sm text-white bg-primary-container px-3 py-1 rounded-full hover:opacity-90 transition-opacity">Tiếp tục</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Long-term Challenges -->
+<section>
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2 mb-md">
+<span class="material-symbols-outlined text-secondary">emoji_events</span>
+                    Thử thách dài hạn
+                </h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-sm">
+<!-- Challenge 1 -->
+<div class="bg-white rounded-xl p-md shadow-[0px_8px_30px_rgba(30,41,59,0.08)] border border-[#F1F5F9] flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-secondary-fixed text-secondary rounded-lg p-2">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded text-on-surface-variant">Tuần</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Đọc 7 ngày liên tiếp</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">Duy trì thói quen đọc sách mỗi ngày để mở khóa huy hiệu Lửa Thiêng.</p>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-lg text-label-lg text-secondary font-bold">5/7 Ngày</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">500 XP</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-3">
+<div class="bg-secondary h-3 rounded-full" style="width: 71%"></div>
+</div>
+</div>
+</div>
+<!-- Challenge 2 -->
+<div class="bg-white rounded-xl p-md shadow-[0px_8px_30px_rgba(30,41,59,0.08)] border border-[#F1F5F9] flex flex-col h-full">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-tertiary-fixed text-tertiary rounded-lg p-2">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-1 rounded text-on-surface-variant">Tháng</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Hoàn thành 2 cuốn sách</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">Đọc trọn vẹn 2 tác phẩm bất kỳ trong tháng này để nhận phần thưởng lớn.</p>
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-lg text-label-lg text-tertiary font-bold">1/2 Cuốn</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1000 XP</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-3">
+<div class="bg-tertiary h-3 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Badges -->
+<div class="col-span-1 md:col-span-4">
+<section class="bg-white rounded-xl p-md shadow-[0px_4px_20px_rgba(30,41,59,0.05)] border border-[#F1F5F9] sticky top-24">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">workspace_premium</span>
+                        Kho danh hiệu
+                    </h3>
+<span class="font-label-lg text-label-lg text-on-surface-variant">3/12</span>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<!-- Badge 1 (Unlocked) -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-2 shadow-[0px_4px_10px_rgba(255,107,0,0.2)] border-2 border-primary-container group-hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-3xl text-primary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Người Mới</span>
+</div>
+<!-- Badge 2 (Unlocked) -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-2 shadow-[0px_4px_10px_rgba(255,107,0,0.2)] border-2 border-primary-container group-hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-3xl text-primary-container" style="font-variation-settings: 'FILL' 1;">speed</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Tốc Độ</span>
+</div>
+<!-- Badge 3 (Unlocked) -->
+<div class="flex flex-col items-center text-center group">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-2 shadow-[0px_4px_10px_rgba(255,107,0,0.2)] border-2 border-primary-container group-hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-3xl text-primary-container" style="font-variation-settings: 'FILL' 1;">nightlight_round</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Cú Đêm</span>
+</div>
+<!-- Badge 4 (Locked) -->
+<div class="flex flex-col items-center text-center group opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" title="Đọc 10 cuốn sách">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-2 border-2 border-surface-container-high">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">library_add_check</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Học Giả</span>
+</div>
+<!-- Badge 5 (Locked) -->
+<div class="flex flex-col items-center text-center group opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" title="Lưu 100 trích dẫn">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-2 border-2 border-surface-container-high">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">edit_note</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ghi Chép</span>
+</div>
+<!-- Badge 6 (Locked) -->
+<div class="flex flex-col items-center text-center group opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" title="Đọc liên tục 30 ngày">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-2 border-2 border-surface-container-high">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">diamond</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Kim Cương</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-outline-variant text-primary rounded-lg font-label-lg text-label-lg hover:bg-surface-container-low transition-colors">Xem tất cả</button>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-white/80 backdrop-blur-md rounded-t-xl shadow-[0px_-4px_20px_rgba(0,0,0,0.05)]"><a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 transition-all rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 transition-all rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">search</span>
+<span class="font-label-sm text-label-sm">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest/50 transition-all rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-1">timer</span>
+<span class="font-label-sm text-label-sm">Focus</span>
+</a></nav>
+
+
+</body></html>
