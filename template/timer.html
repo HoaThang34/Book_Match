@@ -181,17 +181,45 @@
     }
   </style>
 <style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
-<body class="bg-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20 pb-24"><nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-surface-container-high px-4 h-16 flex items-center justify-between">
+<body class="bg-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20 pb-24">
+<!-- TopAppBar -->
+<header class="bg-background/95 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant/10 px-4">
+<div class="flex items-center justify-between px-margin-mobile h-16 w-full max-w-[1200px] mx-auto"><div class="flex items-center justify-between w-full h-16 relative">
     <div class="flex items-center gap-4">
-        <button id="menuBtn" class="p-2 hover:bg-surface-container rounded-full transition-colors">
+        <button id="menuBtn" class="text-on-surface-variant hover:text-primary transition-colors flex md:hidden items-center justify-center p-2">
             <span class="material-symbols-outlined">menu</span>
         </button>
-        <span class="font-display text-lg font-bold text-on-surface">AI Reader</span>
+        <h1 class="font-display font-bold text-xl text-primary">AI Reader</h1>
     </div>
-    <div onclick="window.location.href='streak.html'" class="flex items-center bg-primary/10 px-3 py-1 rounded-full cursor-pointer hover:bg-primary/20 transition-colors">
-        <span class="text-label-lg text-primary">5 Days </span>
+    
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-2 absolute left-1/2 transform -translate-x-1/2">
+        <a href="home.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-4 py-2 rounded-full">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            <span class="font-label-lg">Trang chủ</span>
+        </a>
+        <a href="mission.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-4 py-2 rounded-full">
+            <span class="material-symbols-outlined text-[20px]">search</span>
+            <span class="font-label-lg">Khám phá</span>
+        </a>
+        <a href="timer.html" class="flex items-center gap-2 text-primary font-bold px-4 py-2 rounded-full bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">timer</span>
+            <span class="font-label-lg">Focus</span>
+        </a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+        <div onclick="window.location.href='streak.html'" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+            <span class="text-sm font-semibold text-primary">5 Days</span>
+            <span class="text-sm">✨</span>
+        </div>
+        <!-- Desktop Profile Avatar -->
+        <div onclick="window.location.href='login.html'" class="hidden md:flex w-9 h-9 rounded-full bg-surface-variant border border-outline-variant items-center justify-center cursor-pointer hover:bg-surface-container transition-colors" title="Đăng xuất">
+            <span class="material-symbols-outlined text-[20px] text-on-surface-variant">person</span>
+        </div>
     </div>
-</nav>
+</div></div>
+</header>
 <!-- Ambient Background Glow -->
 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
 <!-- Main Content Canvas -->
@@ -202,7 +230,7 @@
 <span class="font-label-lg text-label-lg uppercase tracking-wider">Deep Focus Mode</span>
 </div>
 <!-- Circular Timer -->
-<div class="relative w-72 h-72 md:w-80 md:h-80 flex items-center justify-center mb-xl">
+<div class="relative w-72 h-72 md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] flex items-center justify-center mb-xl">
 <!-- SVG Rings -->
 <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 320 320">
 <!-- Inactive Track -->
@@ -214,11 +242,11 @@
 </svg>
 <!-- Inner Content -->
 <div class="z-10 flex flex-col items-center">
-<span class="font-display-lg text-display-lg text-on-surface tracking-tighter tabular-nums">15:00</span>
+<span class="font-display-lg text-display-lg md:text-[80px] lg:text-[96px] text-on-surface tracking-tighter tabular-nums font-bold md:leading-none">15:00</span>
 </div>
 </div>
 <!-- Primary Action -->
-<button class="bg-primary-container text-white font-label-lg text-label-lg uppercase tracking-wider px-xl py-sm md:py-md rounded-full shadow-[0_0_25px_rgba(255,107,0,0.25)] hover:shadow-[0_0_35px_rgba(255,107,0,0.4)] hover:bg-primary transition-all active:scale-95 flex items-center gap-2">
+<button class="bg-primary-container text-on-primary-container font-label-lg text-label-lg md:text-[18px] uppercase tracking-wider px-xl py-sm md:px-[64px] md:py-[18px] rounded-full shadow-[0_0_25px_rgba(255,107,0,0.25)] hover:shadow-[0_0_35px_rgba(255,107,0,0.4)] hover:bg-primary transition-all active:scale-95 flex items-center gap-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
             Bắt đầu hẹn giờ
         </button>
@@ -227,19 +255,21 @@
 
 
 
-<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-t border-surface-container-high px-6 py-2 flex justify-around items-center">
-    <button onclick="window.location.href='home.html'" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+<nav class="bg-background/95 fixed bottom-0 w-full z-50 backdrop-blur-md border-t border-outline-variant/10 md:hidden">
+<div class="flex justify-around items-center w-full px-4 py-3 max-w-[720px] mx-auto">
+    <button onclick="window.location.href='home.html'" class="flex flex-col items-center justify-center gap-1 flex-1 text-on-surface-variant hover:text-primary transition-colors">
         <span class="material-symbols-outlined">home</span>
-        <span class="text-[10px] font-medium uppercase tracking-tighter">Home</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider">Home</span>
     </button>
-    <button onclick="window.location.href='mission.html'" class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors">
+    <button onclick="window.location.href='mission.html'" class="flex flex-col items-center justify-center gap-1 flex-1 text-on-surface-variant hover:text-primary transition-colors">
         <span class="material-symbols-outlined">search</span>
-        <span class="text-[10px] font-medium uppercase tracking-tighter">Discover</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider">Discover</span>
     </button>
-    <button onclick="window.location.href='timer.html'" class="flex flex-col items-center gap-1 text-primary">
+    <button onclick="window.location.href='timer.html'" class="flex flex-col items-center justify-center gap-1 flex-1 text-primary">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">timer</span>
-        <span class="text-[10px] font-bold uppercase tracking-tighter">Focus</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider">Focus</span>
     </button>
+</div>
 </nav>
 <!-- Navigation Drawer -->
 <div id="navDrawer" class="fixed inset-0 z-[100] hidden">
