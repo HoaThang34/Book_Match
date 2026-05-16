@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Chào mừng - AI Reading</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#ffb693",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-primary-container": "#572000",
+                        "primary-fixed-dim": "#ffb693",
+                        "on-secondary-fixed-variant": "#4500d8",
+                        "surface-bright": "#f9f9ff",
+                        "secondary": "#4000cc",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d8e3fb",
+                        "on-background": "#111c2d",
+                        "secondary-fixed": "#e5deff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#351000",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "on-surface-variant": "#5a4136",
+                        "surface-container": "#e7eeff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#75d1ff",
+                        "secondary-fixed-dim": "#c9bfff",
+                        "on-tertiary-fixed": "#001e2b",
+                        "outline-variant": "#e2bfb0",
+                        "tertiary-fixed": "#c2e8ff",
+                        "secondary-container": "#581cff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed": "#1b0063",
+                        "surface-container-high": "#dee8ff",
+                        "inverse-on-surface": "#ecf1ff",
+                        "tertiary-container": "#00a5d9",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#003649",
+                        "surface-variant": "#d8e3fb",
+                        "on-secondary-container": "#d4cbff",
+                        "primary": "#a04100",
+                        "primary-container": "#ff6b00",
+                        "on-tertiary-fixed-variant": "#004d67",
+                        "surface-tint": "#a04100",
+                        "inverse-surface": "#263143",
+                        "outline": "#8e7164",
+                        "tertiary": "#006688",
+                        "surface": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#111c2d",
+                        "surface-dim": "#cfdaf2",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "40px",
+                        "xs": "4px",
+                        "margin-desktop": "48px",
+                        "base": "8px",
+                        "md": "24px",
+                        "xl": "64px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": [
+                            "Montserrat"
+                        ],
+                        "label-lg": [
+                            "Montserrat"
+                        ],
+                        "headline-lg": [
+                            "Montserrat"
+                        ],
+                        "headline-md": [
+                            "Montserrat"
+                        ],
+                        "label-sm": [
+                            "Montserrat"
+                        ],
+                        "headline-lg-mobile": [
+                            "Montserrat"
+                        ],
+                        "display-lg": [
+                            "Montserrat"
+                        ],
+                        "body-lg": [
+                            "Montserrat"
+                        ]
+                    },
+                    "fontSize": {
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "label-lg": [
+                            "14px",
+                            {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "headline-lg": [
+                            "32px",
+                            {
+                                "lineHeight": "40px",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-md": [
+                            "24px",
+                            {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                            }
+                        ],
+                        "label-sm": [
+                            "12px",
+                            {
+                                "lineHeight": "16px",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "headline-lg-mobile": [
+                            "28px",
+                            {
+                                "lineHeight": "34px",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "display-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                            }
+                        ]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 191, 176, 0.3);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-surface font-body-md antialiased relative selection:bg-primary-container selection:text-white">
+
+    <!-- Popups -->
+    <!-- Auth Popup -->
+    <div id="authPopup"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-on-background/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-surface-container-lowest p-8 rounded-2xl shadow-2xl max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300 relative border border-outline-variant/20">
+            <button onclick="closeAuthPopup()"
+                class="absolute top-4 right-4 text-on-surface-variant hover:text-error transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="flex justify-center mb-4">
+                <div
+                    class="w-16 h-16 rounded-xl bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
+                    <span class="material-symbols-outlined text-secondary text-[32px] icon-fill">menu_book</span>
+                </div>
+            </div>
+            <h3 class="font-display-lg text-headline-md font-bold text-center mb-6 text-on-surface">Bắt đầu cùng AI
+                Reading</h3>
+            <div class="flex flex-col gap-4">
+                <a href="login.html"
+                    class="w-full py-3 px-6 rounded-full bg-primary-container text-white font-label-lg text-center shadow-[0_4px_20px_rgba(255,107,0,0.25)] hover:bg-primary transition-all active:scale-[0.98]">
+                    Đăng nhập
+                </a>
+                <a href="signup.html"
+                    class="w-full py-3 px-6 rounded-full bg-surface text-primary border border-primary/30 font-label-lg text-center hover:bg-primary/5 transition-all active:scale-[0.98]">
+                    Đăng ký tài khoản mới
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Popup -->
+    <div id="footerPopup"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-on-background/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-surface-container-lowest p-6 rounded-2xl shadow-2xl max-w-xs w-full mx-4 transform scale-95 transition-transform duration-300 relative border border-outline-variant/20 text-center">
+            <div
+                class="w-16 h-16 bg-secondary-container/20 rounded-full flex items-center justify-center mx-auto mb-4 text-secondary">
+                <span class="material-symbols-outlined text-[32px]">construction</span>
+            </div>
+            <h3 class="font-headline-md font-bold mb-2 text-on-surface">Đang cập nhật</h3>
+            <p class="text-body-md text-on-surface-variant mb-6">Tính năng này đang trong quá trình phát triển. Vui lòng
+                quay lại sau!</p>
+            <button onclick="closeFooterPopup()"
+                class="py-2 px-6 rounded-full bg-surface-variant text-on-surface font-label-lg hover:bg-outline-variant/30 transition-all">
+                Đóng
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-outline-variant/10">
+        <div class="max-w-[1200px] mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <span class="material-symbols-outlined text-primary text-[32px] icon-fill">menu_book</span>
+                <span class="font-display-lg font-bold text-2xl text-on-surface tracking-tight">AI Reading</span>
+            </div>
+            <button onclick="openAuthPopup()"
+                class="px-5 py-2 md:px-6 md:py-2 rounded-full bg-primary-container text-white font-label-lg shadow-sm hover:shadow-lg hover:bg-primary transition-all active:scale-95 text-sm md:text-base">
+                Bắt đầu ngay
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- 1, 2, 3, 4: Hero Section -->
+        <section
+            class="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-4 py-20 overflow-hidden">
+            <!-- Background Orbs -->
+            <div
+                class="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-primary-container rounded-full blur-[100px] opacity-20 -z-10 mix-blend-multiply animate-pulse">
+            </div>
+            <div class="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] bg-secondary rounded-full blur-[120px] opacity-15 -z-10 mix-blend-multiply"
+                style="animation: pulse 4s infinite reverse;"></div>
+
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-variant text-on-surface-variant mb-8 border border-outline-variant/20 animate-float">
+                <span class="material-symbols-outlined text-[18px] text-primary">auto_awesome</span>
+                <span class="font-label-sm uppercase tracking-widest">Kỷ nguyên đọc sách mới</span>
+            </div>
+
+            <h1 class="font-display-lg font-bold text-[36px] md:text-[72px] leading-[1.1] md:leading-tight text-on-surface max-w-4xl mb-6">
+                Khai phá tri thức, <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-secondary">Nâng
+                    tầm tư duy</span>
+            </h1>
+
+            <p class="font-body-lg text-base md:text-xl text-on-surface-variant max-w-2xl mb-12 px-2">
+                Hành trình đọc sách của bạn được cá nhân hóa thông minh bởi trí tuệ nhân tạo, giúp bạn hấp thụ kiến thức
+                nhanh hơn và hiệu quả hơn bao giờ hết.
+            </p>
+
+            <button onclick="openAuthPopup()"
+                class="group relative px-8 py-4 rounded-full bg-on-surface text-surface-container-lowest font-label-lg text-lg overflow-hidden shadow-2xl hover:shadow-primary-container/30 transition-all hover:-translate-y-1 active:translate-y-0">
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-primary-container to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
+                <span class="relative z-10 flex items-center gap-2">
+                    Bắt đầu ngay
+                    <span
+                        class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </span>
+            </button>
+        </section>
+
+        <!-- 5. Introduction Section -->
+        <section class="py-24 bg-surface-container-lowest relative z-10 border-y border-outline-variant/10">
+            <div class="max-w-[1200px] mx-auto px-6">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="font-headline-lg font-bold text-2xl md:text-4xl text-on-surface mb-4">Về AI Reading</h2>
+                    <p class="font-body-md text-on-surface-variant max-w-2xl mx-auto text-base md:text-lg">Nền tảng đọc sách thông
+                        minh thế hệ mới, thấu hiểu bạn hơn cả chính bạn.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Mục 1 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[28px] text-primary">lightbulb</span>
+                        </div>
+                        <h3 class="font-headline-md font-bold text-xl mb-3">Ứng dụng làm gì?</h3>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            AI Reading là nền tảng đọc sách số hóa tích hợp trí tuệ nhân tạo, giúp phân tích thói quen,
+                            gợi ý nội dung chuẩn xác và tối ưu hóa trải nghiệm đọc cho từng cá nhân.
+                        </p>
+                    </div>
+                    <!-- Mục 2 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[28px] text-secondary">extension</span>
+                        </div>
+                        <h3 class="font-headline-md font-bold text-xl mb-3">Giải quyết vấn đề gì?</h3>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            Khắc phục triệt để tình trạng mất tập trung, thiếu định hướng khi chọn sách và khó khăn
+                            trong việc duy trì thói quen đọc dài hạn giữa cuộc sống bận rộn.
+                        </p>
+                    </div>
+                    <!-- Mục 3 -->
+                    <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
+                        <div class="w-14 h-14 bg-tertiary/10 rounded-xl flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-[28px] text-tertiary">groups</span>
+                        </div>
+                        <h3 class="font-headline-md font-bold text-xl mb-3">Dành cho ai?</h3>
+                        <p class="text-on-surface-variant leading-relaxed">
+                            Tuyệt vời cho sinh viên, người đi làm, chuyên gia, và bất kỳ ai khao khát phát triển bản
+                            thân, tiếp thu tri thức một cách hệ thống và bền vững.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Features -->
+        <section class="py-24 px-6 max-w-[1200px] mx-auto">
+            <h2 class="font-headline-lg font-bold text-2xl md:text-4xl text-on-surface text-center mb-12 md:mb-20">Tính năng nổi bật</h2>
+
+            <div class="space-y-20 md:space-y-32">
+                <!-- Feature 1 -->
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="flex-1 space-y-6">
+                        <div
+                            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-container/20 text-primary-container mb-2">
+                            <span class="material-symbols-outlined icon-fill">auto_awesome</span>
+                        </div>
+                        <h3 class="font-display-lg font-bold text-2xl md:text-3xl text-on-surface">Gợi ý AI Cá Nhân Hóa</h3>
+                        <p class="font-body-lg text-base md:text-lg text-on-surface-variant">
+                            Thuật toán học máy phân tích sâu sở thích, lịch sử và mục tiêu của bạn để đưa ra những tựa
+                            sách bạn thực sự muốn đọc tiếp theo, chính xác đến 99%.
+                        </p>
+                    </div>
+                    <div class="flex-1 relative group w-full">
+                        <div
+                            class="absolute inset-0 bg-primary/20 rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-500">
+                        </div>
+                        <div
+                            class="relative bg-surface-container-lowest border border-outline-variant/30 p-6 rounded-2xl shadow-xl overflow-hidden transform group-hover:scale-[1.02] transition-transform duration-500">
+                            <!-- Mock UI for AI Suggestion -->
+                            <div class="flex items-center gap-4 mb-4 pb-4 border-b border-outline-variant/20">
+                                <div class="w-12 h-16 bg-surface-variant rounded flex-shrink-0 animate-pulse"></div>
+                                <div class="space-y-2 flex-1">
+                                    <div class="h-4 bg-surface-variant rounded w-3/4"></div>
+                                    <div class="h-3 bg-surface-variant rounded w-1/2"></div>
+                                </div>
+                                <div class="bg-primary-container text-white text-xs px-3 py-1 rounded-full font-bold">
+                                    98% Match</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-16 bg-surface-variant rounded flex-shrink-0 animate-pulse"
+                                    style="animation-delay: 0.2s"></div>
+                                <div class="space-y-2 flex-1">
+                                    <div class="h-4 bg-surface-variant rounded w-5/6"></div>
+                                    <div class="h-3 bg-surface-variant rounded w-1/3"></div>
+                                </div>
+                                <div class="bg-primary-container text-white text-xs px-3 py-1 rounded-full font-bold">
+                                    95% Match</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-12">
+                    <div class="flex-1 space-y-6">
+                        <div
+                            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-secondary/20 text-secondary mb-2">
+                            <span class="material-symbols-outlined icon-fill">center_focus_strong</span>
+                        </div>
+                        <h3 class="font-display-lg font-bold text-2xl md:text-3xl text-on-surface">Chế độ Focus Tuyệt Đối</h3>
+                        <p class="font-body-lg text-base md:text-lg text-on-surface-variant">
+                            Loại bỏ mọi xao nhãng với bộ đếm thời gian thông minh Pomodoro tích hợp. Đọc sâu hơn, hiểu
+                            kỹ hơn và quản lý thời gian hiệu quả.
+                        </p>
+                    </div>
+                    <div class="flex-1 relative group w-full">
+                        <div
+                            class="absolute inset-0 bg-secondary/20 rounded-full blur-3xl group-hover:blur-[40px] transition-all duration-500">
+                        </div>
+                        <div
+                            class="relative bg-surface-container-lowest border border-outline-variant/30 p-8 rounded-full shadow-xl aspect-square flex items-center justify-center transform group-hover:rotate-3 transition-transform duration-500 w-3/4 mx-auto md:w-2/3">
+                            <!-- Mock UI for Timer -->
+                            <div
+                                class="relative w-full h-full rounded-full border-8 border-surface-variant flex items-center justify-center">
+                                <div class="absolute inset-0 border-8 border-secondary rounded-full border-t-transparent border-r-transparent animate-spin"
+                                    style="animation-duration: 3s;"></div>
+                                <div class="text-center">
+                                    <div class="text-4xl md:text-5xl font-display-lg font-bold text-on-surface">24:59
+                                    </div>
+                                    <div
+                                        class="text-sm text-secondary font-medium uppercase tracking-widest mt-2 flex items-center justify-center gap-1">
+                                        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                                        Focusing
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="flex-1 space-y-6">
+                        <div
+                            class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-error/10 text-error mb-2">
+                            <span class="material-symbols-outlined icon-fill">local_fire_department</span>
+                        </div>
+                        <h3 class="font-display-lg font-bold text-2xl md:text-3xl text-on-surface">Xây Dựng Thói Quen (Streak)</h3>
+                        <p class="font-body-lg text-base md:text-lg text-on-surface-variant">
+                            Duy trì chuỗi ngày đọc sách liên tiếp. Hệ thống phần thưởng gamification tạo động lực mạnh
+                            mẽ để bạn mở sách ra mỗi ngày.
+                        </p>
+                    </div>
+                    <div class="flex-1 relative group w-full">
+                        <div
+                            class="absolute inset-0 bg-error/20 rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-500">
+                        </div>
+                        <div
+                            class="relative bg-surface-container-lowest border border-outline-variant/30 p-8 rounded-2xl shadow-xl transform group-hover:-translate-y-2 transition-transform duration-500">
+                            <!-- Mock UI for Streak -->
+                            <div class="flex justify-between items-center mb-8">
+                                <h4 class="font-bold text-on-surface text-lg">Tuần này</h4>
+                                <div
+                                    class="flex items-center gap-1 text-error font-bold bg-error/10 px-4 py-1.5 rounded-full">
+                                    <span
+                                        class="material-symbols-outlined text-[20px] icon-fill">local_fire_department</span>
+                                    5 Ngày
+                                </div>
+                            </div>
+                            <div class="flex justify-between gap-1.5 md:gap-2">
+                                <div
+                                    class="w-8 h-12 md:w-12 md:h-16 bg-error rounded-full opacity-100 shadow-[0_0_15px_rgba(186,26,26,0.5)]">
+                                </div>
+                                <div
+                                    class="w-8 h-12 md:w-12 md:h-16 bg-error rounded-full opacity-100 shadow-[0_0_15px_rgba(186,26,26,0.5)]">
+                                </div>
+                                <div
+                                    class="w-8 h-12 md:w-12 md:h-16 bg-error rounded-full opacity-100 shadow-[0_0_15px_rgba(186,26,26,0.5)]">
+                                </div>
+                                <div
+                                    class="w-8 h-12 md:w-12 md:h-16 bg-error rounded-full opacity-100 shadow-[0_0_15px_rgba(186,26,26,0.5)]">
+                                </div>
+                                <div
+                                    class="w-8 h-12 md:w-12 md:h-16 bg-error rounded-full opacity-100 shadow-[0_0_15px_rgba(186,26,26,0.5)] transform -translate-y-2 transition-transform">
+                                </div>
+                                <div class="w-8 h-12 md:w-12 md:h-16 bg-surface-variant rounded-full"></div>
+                                <div class="w-8 h-12 md:w-12 md:h-16 bg-surface-variant rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Why Choose App (Cards) -->
+        <section class="py-24 bg-surface-container relative z-10 border-y border-outline-variant/10 mt-16">
+            <div class="max-w-[1200px] mx-auto px-6">
+                <h2 class="font-headline-lg font-bold text-2xl md:text-4xl text-on-surface text-center mb-12 md:mb-16">Vì sao nên chọn AI
+                    Reading?</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div
+                        class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-xl hover:-translate-y-1 hover:border-primary/30 transition-all duration-300 group">
+                        <div
+                            class="w-14 h-14 rounded-full bg-primary-container/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary-container/20 transition-all">
+                            <span class="material-symbols-outlined text-primary-container text-[28px]">psychology</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-3 text-on-surface">Thấu hiểu sâu sắc</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Không chỉ gợi ý dựa trên thể loại, AI của
+                            chúng tôi phân tích phong cách văn phong, tốc độ đọc và mục tiêu học tập để tìm ra cuốn sách
+                            "chân ái" cho bạn.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div
+                        class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-xl hover:-translate-y-1 hover:border-secondary/30 transition-all duration-300 group">
+                        <div
+                            class="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-secondary/20 transition-all">
+                            <span class="material-symbols-outlined text-secondary text-[28px]">rocket_launch</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-3 text-on-surface">Động lực vô tận</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Hệ thống thành tựu, huy hiệu và chuỗi ngày
+                            đọc biến việc học hỏi thành một trò chơi thú vị, giúp bạn không bao giờ muốn bỏ lỡ một ngày
+                            nào.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div
+                        class="bg-surface-container-lowest p-8 rounded-2xl shadow-sm border border-outline-variant/20 hover:shadow-xl hover:-translate-y-1 hover:border-tertiary/30 transition-all duration-300 group">
+                        <div
+                            class="w-14 h-14 rounded-full bg-tertiary/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-tertiary/20 transition-all">
+                            <span class="material-symbols-outlined text-tertiary text-[28px]">view_quilt</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-3 text-on-surface">Thiết kế tối giản</h3>
+                        <p class="text-on-surface-variant leading-relaxed">Giao diện được tinh chỉnh tỉ mỉ, loại bỏ mọi
+                            chi tiết thừa, mang đến không gian tĩnh lặng, bảo vệ mắt và tôn vinh nội dung cuốn sách bạn
+                            đang đọc.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. User Reviews -->
+        <section class="py-24 max-w-[1200px] mx-auto px-6">
+            <h2 class="font-headline-lg font-bold text-2xl md:text-4xl text-on-surface text-center mb-12 md:mb-16">Người dùng nói gì về
+                chúng tôi</h2>
+            <div class="relative">
+                <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory no-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
+
+                <!-- Review 1 -->
+                <div
+                    class="min-w-[320px] md:min-w-[380px] snap-center bg-surface-container-lowest p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-outline-variant/20 flex flex-col">
+                    <div class="flex items-center gap-1 text-primary-container mb-6">
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                    </div>
+                    <p class="text-on-surface-variant text-lg italic mb-8 flex-1 leading-relaxed">"Trước đây tôi mua rất
+                        nhiều sách nhưng chỉ đọc được vài trang là bỏ. Từ khi dùng AI Reading, chế độ Focus và Streak đã
+                        giúp tôi đọc hết 4 cuốn sách trong một tháng! Gợi ý AI thực sự quá đỉnh."</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div
+                            class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border border-outline-variant/30">
+                            <span class="material-symbols-outlined text-on-surface-variant text-[24px]">person</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-on-surface">Minh Quân</h4>
+                            <p class="text-sm text-on-surface-variant">Kỹ sư phần mềm</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div
+                    class="min-w-[320px] md:min-w-[380px] snap-center bg-surface-container-lowest p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-outline-variant/20 flex flex-col">
+                    <div class="flex items-center gap-1 text-primary-container mb-6">
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                    </div>
+                    <p class="text-on-surface-variant text-lg italic mb-8 flex-1 leading-relaxed">"Giao diện đẹp miễn
+                        chê. Rất trực quan và hiện đại. Tôi thích cách app hiểu được gu đọc của tôi chỉ sau vài cuốn. Nó
+                        giống như có một người thủ thư riêng tận tụy vậy."</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div
+                            class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border border-outline-variant/30">
+                            <span class="material-symbols-outlined text-on-surface-variant text-[24px]">person</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-on-surface">Hải Yến</h4>
+                            <p class="text-sm text-on-surface-variant">Sinh viên Đại học</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div
+                    class="min-w-[320px] md:min-w-[380px] snap-center bg-surface-container-lowest p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-outline-variant/20 flex flex-col">
+                    <div class="flex items-center gap-1 text-primary-container mb-6">
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined icon-fill text-[20px]">star</span>
+                        <span class="material-symbols-outlined text-[20px]">star</span>
+                    </div>
+                    <p class="text-on-surface-variant text-lg italic mb-8 flex-1 leading-relaxed">"Tính năng theo dõi
+                        tiến độ rất chi tiết. AI Reading giúp tôi tìm được những cuốn sách ngách về kinh tế mà tôi không
+                        thể tự tìm thấy trên mạng. Một công cụ không thể thiếu."</p>
+                    <div class="flex items-center gap-4 mt-auto">
+                        <div
+                            class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border border-outline-variant/30">
+                            <span class="material-symbols-outlined text-on-surface-variant text-[24px]">person</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-on-surface">Tuấn Phong</h4>
+                            <p class="text-sm text-on-surface-variant">Chuyên viên Marketing</p>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                <!-- Scroll indicator for mobile -->
+                <div class="flex justify-center gap-1.5 mt-2 md:hidden">
+                    <div class="w-6 h-1 rounded-full bg-primary-container"></div>
+                    <div class="w-2 h-1 rounded-full bg-outline-variant/30"></div>
+                    <div class="w-2 h-1 rounded-full bg-outline-variant/30"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Bottom CTA -->
+        <section class="py-32 px-6 relative overflow-hidden">
+            <div class="absolute inset-0 bg-primary-container"></div>
+            <div
+                class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-black/20 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/3">
+            </div>
+
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <h2 class="font-display-lg text-3xl md:text-5xl text-white font-bold mb-6 md:mb-8">Hãy sẵn sàng trải nghiệm ngay
+                    hôm nay!!!</h2>
+                <p class="text-white/90 text-lg md:text-2xl mb-10 md:mb-12 max-w-2xl mx-auto">Tham gia cộng đồng hàng ngàn người
+                    đọc thông minh và bắt đầu hành trình chuyển hóa tri thức của bạn.</p>
+                <button onclick="openAuthPopup()"
+                    class="px-10 py-4 md:px-12 md:py-5 rounded-full bg-white text-primary-container font-bold text-lg md:text-xl shadow-2xl hover:shadow-white/20 hover:-translate-y-1 transition-all active:translate-y-0">
+                    Tham gia cùng chúng tôi
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 10. Footer -->
+    <footer class="bg-surface-container-lowest border-t border-outline-variant/20 pt-16 pb-8">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[28px] icon-fill">menu_book</span>
+                    <span class="font-display-lg font-bold text-xl text-on-surface">AI Reading</span>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-6 md:gap-y-4">
+                    <a href="javascript:void(0)" onclick="openFooterPopup()"
+                        class="text-on-surface-variant hover:text-primary transition-colors font-medium px-2 py-1">Điều khoản</a>
+                    <a href="javascript:void(0)" onclick="openFooterPopup()"
+                        class="text-on-surface-variant hover:text-primary transition-colors font-medium px-2 py-1">Chính sách bảo
+                        mật</a>
+                    <a href="javascript:void(0)" onclick="openFooterPopup()"
+                        class="text-on-surface-variant hover:text-primary transition-colors font-medium px-2 py-1">Liên hệ</a>
+                </div>
+
+                <div class="flex gap-4">
+                    <button onclick="openFooterPopup()"
+                        class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-primary-container hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[20px]">language</span>
+                    </button>
+                    <button onclick="openFooterPopup()"
+                        class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-primary-container hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-[20px]">share</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center text-on-surface-variant text-sm border-t border-outline-variant/20 pt-8">
+                &copy; 2026 AI Reading. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Popups -->
+    <script>
+        function openAuthPopup() {
+            const popup = document.getElementById('authPopup');
+            const inner = popup.querySelector('div');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            // Small delay to allow display: flex to apply before opacity transition
+            setTimeout(() => {
+                popup.classList.remove('opacity-0');
+                inner.classList.remove('scale-95');
+                inner.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAuthPopup() {
+            const popup = document.getElementById('authPopup');
+            const inner = popup.querySelector('div');
+            popup.classList.add('opacity-0');
+            inner.classList.remove('scale-100');
+            inner.classList.add('scale-95');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+                popup.classList.remove('flex');
+            }, 300);
+        }
+
+        function openFooterPopup() {
+            const popup = document.getElementById('footerPopup');
+            const inner = popup.querySelector('div');
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            setTimeout(() => {
+                popup.classList.remove('opacity-0');
+                inner.classList.remove('scale-95');
+                inner.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeFooterPopup() {
+            const popup = document.getElementById('footerPopup');
+            const inner = popup.querySelector('div');
+            popup.classList.add('opacity-0');
+            inner.classList.remove('scale-100');
+            inner.classList.add('scale-95');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+                popup.classList.remove('flex');
+            }, 300);
+        }
+
+        // Close popups when clicking outside
+        document.getElementById('authPopup').addEventListener('click', function (e) {
+            if (e.target === this) closeAuthPopup();
+        });
+        document.getElementById('footerPopup').addEventListener('click', function (e) {
+            if (e.target === this) closeFooterPopup();
+        });
+    </script>
+</body>
+
+</html>
