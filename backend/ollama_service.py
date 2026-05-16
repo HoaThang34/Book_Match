@@ -38,6 +38,14 @@ def chat_completion(system: str, user: str) -> str:
         raise OllamaError("Không kết nối được Ollama. Kiểm tra OLLAMA_BASE_URL và dịch vụ Ollama.") from exc
 
     if response.status_code != 200:
+        error_msg = ""
+        try:
+            error_msg = response.json().get("error", "")
+        except ValueError:
+            error_msg = response.text
+            
+        if error_msg:
+            raise OllamaError(f"Ollama trả lỗi HTTP {response.status_code}: {error_msg}")
         raise OllamaError(f"Ollama trả lỗi HTTP {response.status_code}.")
 
     data = response.json()
