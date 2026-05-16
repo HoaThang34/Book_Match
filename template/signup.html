@@ -210,13 +210,14 @@
 <p class="font-body-md text-body-md text-on-surface-variant">Tham gia hành trình tri thức với AI Reader.</p>
 </header>
 <!-- Sign Up Form -->
-<form class="flex flex-col gap-md w-full bg-surface/80 backdrop-blur-xl p-6 rounded-2xl border border-black/5 shadow-[0_10px_40px_rgba(0,0,0,0.05)]">
+<p id="auth-error" class="hidden text-error font-body-md text-center" role="alert"></p>
+<form id="signup-form" class="flex flex-col gap-md w-full bg-surface/80 backdrop-blur-xl p-6 rounded-2xl border border-black/5 shadow-[0_10px_40px_rgba(0,0,0,0.05)]" novalidate>
 <!-- Full Name Input -->
 <div class="flex flex-col gap-xs">
 <label class="font-label-md text-label-md text-on-surface-variant uppercase">Họ và tên</label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary-container transition-colors">person</span>
-<input class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Nguyễn Văn A" type="text">
+<input id="full_name" name="full_name" class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="Nguyễn Văn A" type="text" required>
 </div>
 </div>
 <!-- Email Input -->
@@ -224,7 +225,7 @@
 <label class="font-label-md text-label-md text-on-surface-variant uppercase">Địa chỉ Email</label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary-container transition-colors">mail</span>
-<input class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="email@example.com" type="email">
+<input id="email" name="email" class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="email@example.com" type="email" required>
 </div>
 </div>
 <!-- Password Input -->
@@ -232,8 +233,8 @@
 <label class="font-label-md text-label-md text-on-surface-variant uppercase">Mật khẩu của bạn</label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary-container transition-colors">lock</span>
-<input class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="••••••••" type="password">
-<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<input id="password" name="password" class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-12 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="••••••••" type="password" required>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button" data-toggle-password="password" aria-label="Hiện hoặc ẩn mật khẩu">
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
@@ -243,29 +244,13 @@
 <label class="font-label-md text-label-md text-on-surface-variant uppercase">Xác nhận lại mật khẩu</label>
 <div class="relative group">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary-container transition-colors">lock_reset</span>
-<input class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="••••••••" type="password">
+<input id="confirm_password" name="confirm_password" class="w-full bg-surface-container-lowest border border-outline rounded-xl py-3 pl-12 pr-4 text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" placeholder="••••••••" type="password" required>
+</div>
 </div>
 </div>
 <!-- Primary Action Button -->
-<button onclick="window.location.href='index.html'" class="mt-4 w-full bg-primary-container text-[#ffffff] font-label-md text-label-md uppercase tracking-wide py-4 rounded-xl shadow-[0_4px_20px_rgba(255,107,0,0.25)] hover:shadow-[0_6px_25px_rgba(255,107,0,0.4)] active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="button">Tạo tài khoản mới <span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+<button class="mt-4 w-full bg-primary-container text-[#ffffff] font-label-md text-label-md uppercase tracking-wide py-4 rounded-xl shadow-[0_4px_20px_rgba(255,107,0,0.25)] hover:shadow-[0_6px_25px_rgba(255,107,0,0.4)] active:scale-[0.98] transition-all flex justify-center items-center gap-2" type="submit">Tạo tài khoản mới <span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
 </form>
-<!-- Social Sign Up -->
-<div class="flex flex-col gap-4 w-full">
-<div class="flex items-center gap-4">
-<div class="h-[1px] flex-1 bg-outline-variant"></div>
-<span class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">Hoặc tiếp tục với</span>
-<div class="h-[1px] flex-1 bg-outline-variant"></div>
-</div>
-<div class="flex gap-4">
-<button class="flex-1 flex justify-center items-center py-3 border border-outline-variant rounded-xl bg-surface-container-lowest hover:bg-surface-container transition-colors" type="button">
-<!-- Placeholder for Google Icon using Material Symbol for structure, but usually an SVG -->
-<span class="material-symbols-outlined text-on-surface">account_circle</span>
-</button>
-<button class="flex-1 flex justify-center items-center py-3 border border-outline-variant rounded-xl bg-surface-container-lowest hover:bg-surface-container transition-colors" type="button">
-<span class="material-symbols-outlined text-on-surface">ios</span>
-</button>
-</div>
-</div>
 <!-- Footer Link -->
 <div class="text-center mt-4">
 <p class="font-body-md text-body-md text-on-surface-variant">
@@ -276,4 +261,5 @@
 </main>
 
 
+<script src="/static/js/auth.js"></script>
 </body></html>

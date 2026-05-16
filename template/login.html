@@ -236,7 +236,8 @@
                     lại</span></h1>
         </div>
         <!-- Form Section -->
-        <form class="flex flex-col gap-md w-full">
+        <p id="auth-error" class="hidden text-error font-body-md text-center mb-sm" role="alert"></p>
+        <form id="login-form" class="flex flex-col gap-md w-full" novalidate>
             <!-- Email Input -->
             <div class="flex flex-col gap-xs group">
                 <label class="font-label-lg text-label-lg text-on-surface-variant uppercase ml-1"
@@ -261,20 +262,20 @@
                         id="password" placeholder="••••••••" type="password">
                     <button
                         class="absolute right-4 text-outline hover:text-on-surface transition-colors focus:outline-none"
-                        type="button">
+                        type="button" data-toggle-password="password" aria-label="Hiện hoặc ẩn mật khẩu">
                         <span class="material-symbols-outlined">visibility_off</span>
                     </button>
                 </div>
             </div>
             <!-- Actions Row -->
             <div class="flex justify-end mt-[-8px]">
-                <a class="font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors"
+                <a id="forgot-password" class="font-label-lg text-label-lg text-primary hover:text-primary-container transition-colors"
                     href="#">Quên mật khẩu?</a>
             </div>
             <!-- Submit Button -->
-            <button onclick="window.location.href='home.html'"
+            <button
                 class="w-full bg-primary-container text-white font-label-lg text-label-lg uppercase tracking-wider py-4 rounded-full mt-sm hover:bg-primary transition-colors shadow-[0_4px_20px_rgba(255,107,0,0.25)] active:scale-[0.98]"
-                type="button">
+                type="submit">
                 Đăng nhập
             </button>
         </form>
@@ -289,14 +290,14 @@
         <div class="grid grid-cols-2 gap-sm">
             <button
                 class="flex items-center justify-center gap-base py-3 border border-outline-variant rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors group"
-                type="button">
+                type="button" data-oauth>
                 <span
                     class="material-symbols-outlined text-[20px] text-on-surface group-hover:text-primary transition-colors">language</span>
                 <span class="font-label-lg text-label-lg text-on-surface">Google</span>
             </button>
             <button
                 class="flex items-center justify-center gap-base py-3 border border-outline-variant rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors group"
-                type="button">
+                type="button" data-oauth>
                 <span
                     class="material-symbols-outlined text-[20px] text-on-surface group-hover:text-primary transition-colors">smartphone</span>
                 <span class="font-label-lg text-label-lg text-on-surface">Apple</span>
@@ -313,6 +314,7 @@
     </main>
 
 
+    <script src="/static/js/auth.js"></script>
 </body>
 
 </html>
