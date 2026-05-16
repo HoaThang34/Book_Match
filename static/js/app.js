@@ -54,15 +54,52 @@
     );
   }
 
+  var AI_CACHE_KEY = "ai_recommendations_cache";
+
   async function initHome() {
-    const grid = document.getElementById("recommendations-grid");
-    const loading = document.getElementById("recommendations-loading");
-    const errEl = document.getElementById("recommendations-error");
+    var grid = document.getElementById("recommendations-grid");
+    var loading = document.getElementById("recommendations-loading");
+    var errEl = document.getElementById("recommendations-error");
+    var commentEl = document.getElementById("ai-comment");
     if (!grid) return;
+
+    var needsRefresh = localStorage.getItem("ai_needs_refresh") === "1";
+
+    if (!needsRefresh) {
+      // Load từ cache
+      var cached = localStorage.getItem(AI_CACHE_KEY);
+      if (cached) {
+        try {
+          var parsed = JSON.parse(cached);
+          grid.innerHTML = (parsed.recommendations || []).map(renderRecommendationCard).join("");
+          if (commentEl && parsed.comment) {
+            commentEl.textContent = parsed.comment;
+            commentEl.parentElement.classList.remove("hidden");
+          }
+          if (loading) loading.classList.add("hidden");
+          return;
+        } catch (_) {}
+      }
+      // Không có cache và không có flag → không gọi AI, hiển thị prompt điền khảo sát
+      if (loading) {
+        loading.textContent = "Hãy điền khảo sát để nhận đề xuất cá nhân hóa từ AI.";
+      }
+      return;
+    }
+
+    // Có flag: gọi AI, lưu cache
+    localStorage.removeItem("ai_needs_refresh");
+    if (loading) loading.textContent = "Đang tải đề xuất từ AI...";
     try {
-      const { ok, data } = await api.get("/api/ai/recommendations");
+      var _ref = await api.get("/api/ai/recommendations");
+      var ok = _ref.ok, data = _ref.data;
       if (!ok) throw new Error(data.error || "Không tải được đề xuất.");
+      localStorage.setItem(AI_CACHE_KEY, JSON.stringify(data));
       grid.innerHTML = (data.recommendations || []).map(renderRecommendationCard).join("");
+      if (commentEl && data.comment) {
+        commentEl.textContent = data.comment;
+        commentEl.parentElement.classList.remove("hidden");
+      }
     } catch (e) {
       if (e.status === 401) { window.location.href = "login.html"; return; }
       if (errEl) { errEl.textContent = e.message || "Lỗi tải đề xuất."; errEl.classList.remove("hidden"); }
@@ -72,14 +109,37 @@
   }
 
   async function initSurvey() {
-    const btn = document.getElementById("survey-submit");
+    var btn = document.getElementById("survey-submit");
     if (!btn) return;
+
+    // Pre-fill nếu có dữ liệu cũ trong localStorage
+    var savedProfile = localStorage.getItem("survey_profile");
+    if (savedProfile) {
+      try {
+        var prof = JSON.parse(savedProfile);
+        var ageEl = document.getElementById("age");
+        var intEl = document.getElementById("interests");
+        var moodEl = document.getElementById("mood");
+        if (ageEl && prof.age) ageEl.value = prof.age;
+        if (intEl && prof.interests) intEl.value = prof.interests;
+        if (moodEl && prof.mood) moodEl.value = prof.mood;
+      } catch (_) {}
+    }
+
     btn.addEventListener("click", async function (e) {
       e.preventDefault();
-      const age = document.getElementById("age")?.value;
-      const interests = document.getElementById("interests")?.value?.trim() || "";
-      const mood = document.getElementById("mood")?.value?.trim() || "";
-      const payload = { age: age ? parseInt(age, 10) : null, interests, mood };
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.textContent = "Đang xử lý...";
+
+      var age = document.getElementById("age")?.value;
+      var interests = document.getElementById("interests")?.value?.trim() || "";
+      var mood = document.getElementById("mood")?.value?.trim() || "";
+      var payload = { age: age ? parseInt(age, 10) : null, interests, mood };
+
+      // Lưu profile vào localStorage ngay lập tức
+      localStorage.setItem("survey_profile", JSON.stringify(payload));
+
       try {
         await api.put("/api/user/profile", payload);
       } catch (err) {
@@ -90,6 +150,8 @@
         }
       }
       sessionStorage.removeItem("pending_profile");
+      // Đánh dấu cần gọi AI mới
+      localStorage.setItem("ai_needs_refresh", "1");
       window.location.href = "home.html";
     });
   }

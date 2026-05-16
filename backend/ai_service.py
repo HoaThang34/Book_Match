@@ -21,9 +21,11 @@ Nhiệm vụ: đề xuất đúng 3 cuốn sách phù hợp người dùng.
 - Ưu tiên sách có bản tiếng Việt hoặc tên quen thuộc tại Việt Nam.
 - match_percent từ 75 đến 99 (số nguyên).
 - cover_keyword: 3-6 từ tiếng Anh mô tả bìa sách (dùng làm gợi ý hình ảnh).
+- comment: nhận xét ngắn 1-2 câu tiếng Việt về hồ sơ đọc sách của người dùng (tính cách, xu hướng, gợi ý thêm).
 
 CHỈ trả về JSON hợp lệ, không markdown, không giải thích ngoài JSON:
 {{
+  "comment": "Nhận xét ngắn về người dùng",
   "recommendations": [
     {{
       "title": "Tên sách",
@@ -55,7 +57,7 @@ def _profile_context(profile: UserProfile | None, stats: UserStats | None) -> st
     return "\n".join(parts)
 
 
-def get_book_recommendations(profile: UserProfile | None, stats: UserStats | None) -> list[dict]:
+def get_book_recommendations(profile: UserProfile | None, stats: UserStats | None) -> dict:
     now = datetime.now(TZ)
     system = _build_recommendation_system_prompt(now)
     user_msg = f"Thông tin người dùng:\n{_profile_context(profile, stats)}\n\nĐề xuất 3 cuốn sách."
@@ -85,4 +87,5 @@ def get_book_recommendations(profile: UserProfile | None, stats: UserStats | Non
         )
     if not result:
         raise OllamaError("Không có đề xuất sách hợp lệ.")
-    return result
+    comment = (data.get("comment") or "").strip()
+    return {"recommendations": result, "comment": comment}

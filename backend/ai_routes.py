@@ -18,8 +18,8 @@ def recommendations():
     stats = UserStats.query.filter_by(user_id=user_id).first()
 
     try:
-        books = get_book_recommendations(profile, stats)
+        result = get_book_recommendations(profile, stats)
     except OllamaError as exc:
         return jsonify({"error": str(exc)}), 503
 
-    return jsonify({"recommendations": books})
+    return jsonify({"recommendations": result["recommendations"], "comment": result["comment"]})

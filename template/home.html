@@ -259,9 +259,19 @@
                 <div class="flex items-baseline justify-between pt-4 pb-2">
                         <h2 class="font-headline-lg-mobile md:text-headline-lg text-headline-lg-mobile text-on-surface">
                                 Các đề xuất hôm nay</h2>
+                        <a href="index.html" id="edit-survey-btn" title="Chỉnh sửa khảo sát"
+                                class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors text-sm font-semibold">
+                                <span class="material-symbols-outlined text-[16px]">edit</span>
+                                <span class="font-label-sm">Chỉnh sửa</span>
+                        </a>
+                </div>
+                <!-- AI Comment Section (hidden until data available) -->
+                <div id="ai-comment-section" class="hidden bg-surface-container border border-outline-variant/20 rounded-xl px-md py-sm flex items-start gap-sm">
+                        <span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        <p id="ai-comment" class="font-body-md text-body-md text-on-surface-variant italic"></p>
                 </div>
                 <p id="recommendations-error" class="hidden text-error font-body-md mb-4"></p>
-                <p id="recommendations-loading" class="font-body-md text-on-surface-variant mb-4">Đang tải đề xuất từ AI...</p>
+                <p id="recommendations-loading" class="font-body-md text-on-surface-variant mb-4">Hãy điền khảo sát để nhận đề xuất cá nhân hóa từ AI.</p>
                 <div id="recommendations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
                         <!-- dynamic -->
                         <article class="hidden">
