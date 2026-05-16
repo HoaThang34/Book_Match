@@ -67,3 +67,10 @@ class Config:
     RATELIMIT_AUTH = os.getenv("RATELIMIT_AUTH", "10 per minute")
 
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", "16384"))
+
+    OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
+    OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))
+    OLLAMA_TEMPERATURE = float(os.getenv("OLLAMA_TEMPERATURE", "0.7"))
+    OLLAMA_TOP_P = float(os.getenv("OLLAMA_TOP_P", "0.9"))
+    OLLAMA_NUM_PREDICT = int(os.getenv("OLLAMA_NUM_PREDICT", "2048"))

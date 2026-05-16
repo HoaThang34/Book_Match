@@ -188,7 +188,7 @@
     }
   </style>
 <style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
-<body class="bg-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-32 md:pt-20 pb-24">
+<body class="bg-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-32 md:pt-20 pb-24" data-page="timer">
 <!-- TopAppBar -->
 <header class="bg-background/95 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant/10">
 <div class="flex flex-col md:flex-row items-center justify-between md:px-margin-mobile w-full max-w-[1200px] mx-auto relative">
@@ -196,8 +196,8 @@
         <h1 class="font-display font-bold text-xl text-primary">AI Reader</h1>
         
         <div class="flex items-center gap-3">
-            <div onclick="window.location.href='streak.html'" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
-                <span class="text-sm font-semibold text-primary">5 Days</span>
+            <div data-streak-badge onclick="window.location.href='streak.html'" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+                <span data-streak-text class="text-sm font-semibold text-primary">0 Days</span>
                 <span class="text-sm">✨</span>
             </div>
             <!-- Profile Avatar -->
@@ -231,11 +231,11 @@
 <!-- Ambient Background Glow -->
 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
 <!-- Main Content Canvas -->
-<main class="relative z-10 flex flex-col items-center justify-center w-full max-w-[720px] px-margin-mobile">
+<main id="timer-main" class="relative z-10 flex flex-col items-center justify-center w-full max-w-[720px] px-margin-mobile min-h-[320px]">
 <!-- Top Status Indicator -->
 <div class="mb-lg flex items-center gap-xs text-primary bg-primary/10 px-md py-xs rounded-full border border-primary/20 backdrop-blur-md">
 <span class="material-symbols-outlined text-[18px]">psychology</span>
-<span class="font-label-lg text-label-lg uppercase tracking-wider">Deep Focus Mode</span>
+<span id="timer-mission-title" class="font-label-lg text-label-lg uppercase tracking-wider">Deep Focus Mode</span>
 </div>
 <!-- Circular Timer -->
 <div class="relative w-72 h-72 md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] flex items-center justify-center mb-xl">
@@ -246,18 +246,20 @@
 <!-- Active Track (Ignite Orange) -->
 <!-- stroke-dasharray = 2 * PI * r = 2 * 3.14159 * 148 ≈ 930 -->
 <!-- stroke-dashoffset dictates progress. Set to ~1/4 complete for visual interest -->
-<circle class="text-primary-container timer-glow transition-all duration-1000 ease-linear" cx="160" cy="160" fill="transparent" r="148" stroke="currentColor" stroke-dasharray="930" stroke-dashoffset="200" stroke-linecap="round" stroke-width="8"></circle>
+<circle id="timer-ring" class="text-primary-container timer-glow transition-all duration-1000 ease-linear" cx="160" cy="160" fill="transparent" r="148" stroke="currentColor" stroke-dasharray="930" stroke-dashoffset="0" stroke-linecap="round" stroke-width="8"></circle>
 </svg>
 <!-- Inner Content -->
 <div class="z-10 flex flex-col items-center">
-<span class="font-display-lg text-display-lg md:text-[80px] lg:text-[96px] text-on-surface tracking-tighter tabular-nums font-bold md:leading-none">15:00</span>
+<span id="timer-display" class="font-display-lg text-display-lg md:text-[80px] lg:text-[96px] text-on-surface tracking-tighter tabular-nums font-bold md:leading-none">15:00</span>
 </div>
 </div>
 <!-- Primary Action -->
-<button class="bg-primary-container text-on-primary-container font-label-lg text-label-lg md:text-[18px] uppercase tracking-wider px-xl py-sm md:px-[64px] md:py-[18px] rounded-full shadow-[0_0_25px_rgba(255,107,0,0.25)] hover:shadow-[0_0_35px_rgba(255,107,0,0.4)] hover:bg-primary transition-all active:scale-95 flex items-center gap-2">
+<button id="timer-btn" type="button" class="bg-primary-container text-on-primary-container font-label-lg text-label-lg md:text-[18px] uppercase tracking-wider px-xl py-sm md:px-[64px] md:py-[18px] rounded-full shadow-[0_0_25px_rgba(255,107,0,0.25)] hover:shadow-[0_0_35px_rgba(255,107,0,0.4)] hover:bg-primary transition-all active:scale-95 flex items-center gap-2">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
             Bắt đầu hẹn giờ
         </button>
 </main>
 
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
 </body></html>

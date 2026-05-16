@@ -2,7 +2,7 @@
 
 ## Mục đích
 
-Backend Python phục vụ xác thực người dùng (đăng ký, đăng nhập) cho ứng dụng AI Reader.
+Backend Python phục vụ xác thực, gamification (nhiệm vụ, chuỗi ngày), và gợi ý sách qua Ollama cho ứng dụng AI Reader.
 
 ## Công nghệ
 
@@ -13,6 +13,7 @@ Backend Python phục vụ xác thực người dùng (đăng ký, đăng nhập
 | Mật khẩu | bcrypt |
 | Phiên đăng nhập | JWT trong HttpOnly cookie |
 | Giới hạn tần suất | Flask-Limiter |
+| AI gợi ý sách | Ollama (HTTP local) |
 
 ## Cấu trúc thư mục
 
@@ -21,10 +22,18 @@ backend/
   __init__.py      # Factory ứng dụng, route HTML
   config.py        # Đọc biến môi trường (.env)
   extensions.py    # db, jwt, limiter
-  models.py        # Model User
+  models.py        # User, profile, missions, streak
   auth_routes.py   # API /api/auth/*
-  auth_service.py  # Logic đăng ký / đăng nhập
-  validators.py    # Kiểm tra email, mật khẩu
+  ai_routes.py     # API /api/ai/*
+  user_routes.py   # API /api/user/* (missions, timer, streak)
+  ollama_service.py
+  ai_service.py
+  gamification_service.py
+  seed_data.py
+  auth_service.py
+  validators.py
+static/js/
+  api.js, app.js   # Gọi API từ trang HTML
 run.py             # Điểm chạy chính
 static/js/auth.js  # Gọi API từ form HTML
 template/          # Giao diện HTML
@@ -53,4 +62,10 @@ Chi tiết từng biến xem trong file `.env.example`. Các biến bắt buộc
 | GET | `/health` | Kiểm tra server |
 | GET | `/<trang>.html` | Phục vụ giao diện tĩnh qua Flask |
 
-Xem thêm: [auth-api.md](./auth-api.md), [security.md](./security.md).
+| GET | `/api/ai/recommendations` | Gợi ý sách (JWT) |
+| GET/PUT | `/api/user/profile` | Khảo sát người dùng |
+| GET | `/api/user/missions` | Nhiệm vụ, thử thách, danh hiệu |
+| GET | `/api/user/streak` | Chuỗi ngày + lịch |
+| POST | `/api/user/timer/complete` | Hoàn thành phiên Focus |
+
+Xem thêm: [auth-api.md](./auth-api.md), [ollama-ai.md](./ollama-ai.md), [security.md](./security.md).

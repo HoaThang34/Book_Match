@@ -4,9 +4,12 @@ from flask import Flask, abort, render_template
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+from backend.ai_routes import ai_bp
 from backend.auth_routes import auth_bp, register_jwt_handlers
 from backend.config import ROOT_DIR
 from backend.extensions import db, jwt, limiter
+from backend.seed_data import seed_catalog
+from backend.user_routes import user_bp
 
 ALLOWED_PAGES = {
     "index",
@@ -46,12 +49,15 @@ def create_app() -> Flask:
     )
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(ai_bp)
+    app.register_blueprint(user_bp)
 
     _register_security_headers(app)
     _register_routes(app)
 
     with app.app_context():
         db.create_all()
+        seed_catalog()
 
     return app
 
