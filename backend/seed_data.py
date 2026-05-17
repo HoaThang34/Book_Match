@@ -3,9 +3,15 @@ from backend.models import Badge, Challenge, Mission
 
 
 def seed_catalog():
+    _seed_missions()
+    _seed_challenges()
+    _seed_badges()
+    db.session.commit()
+
+
+def _seed_missions():
     if Mission.query.count() > 0:
         return
-
     missions = [
         ("read-15-min", "Đọc 15 phút", "Đọc tập trung 15 phút", "daily", 1, 50, 15, "check_circle", 1),
         ("finish-chapter", "Hoàn thành 1 chương", "Đọc xong một chương sách", "daily", 1, 100, None, "menu_book", 2),
@@ -33,6 +39,10 @@ def seed_catalog():
             )
         )
 
+
+def _seed_challenges():
+    if Challenge.query.count() > 0:
+        return
     challenges = [
         ("streak-7", "Đọc 7 ngày liên tiếp", "Duy trì thói quen đọc mỗi ngày", "Tuần", 7, 500, "local_fire_department", 1),
         ("books-2-month", "Hoàn thành 2 cuốn sách", "Đọc trọn 2 cuốn trong tháng", "Tháng", 2, 1000, "library_books", 2),
@@ -52,6 +62,10 @@ def seed_catalog():
             )
         )
 
+
+def _seed_badges():
+    if Badge.query.count() > 0:
+        return
     badges = [
         ("newbie", "Người Mới", "Hoàn thành nhiệm vụ đầu tiên", "auto_awesome", "Hoàn thành 1 nhiệm vụ", 1),
         ("speed", "Tốc Độ", "Đọc 30 phút trong một phiên", "speed", "Focus 30 phút một lần", 2),
@@ -71,5 +85,3 @@ def seed_catalog():
                 sort_order=row[5],
             )
         )
-
-    db.session.commit()

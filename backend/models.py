@@ -31,7 +31,7 @@ class UserProfile(db.Model):
     __tablename__ = "user_profiles"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
     age = db.Column(db.Integer, nullable=True)
     interests = db.Column(db.String(500), nullable=True)
     mood = db.Column(db.String(200), nullable=True)
@@ -57,13 +57,13 @@ class UserStats(db.Model):
     __tablename__ = "user_stats"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
     current_streak = db.Column(db.Integer, default=0, nullable=False)
     longest_streak = db.Column(db.Integer, default=0, nullable=False)
     total_read_minutes = db.Column(db.Integer, default=0, nullable=False)
     books_completed = db.Column(db.Integer, default=0, nullable=False)
     xp = db.Column(db.Integer, default=0, nullable=False)
-    active_mission_id = db.Column(db.Integer, db.ForeignKey("missions.id"), nullable=True)
+    active_mission_id = db.Column(db.Integer, db.ForeignKey("missions.id", ondelete="SET NULL"), nullable=True)
     last_read_date = db.Column(db.Date, nullable=True)
 
     user = db.relationship("User", back_populates="stats")
@@ -121,8 +121,8 @@ class UserMissionProgress(db.Model):
     __tablename__ = "user_mission_progress"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    mission_id = db.Column(db.Integer, db.ForeignKey("missions.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    mission_id = db.Column(db.Integer, db.ForeignKey("missions.id", ondelete="CASCADE"), nullable=False)
     current_value = db.Column(db.Integer, default=0, nullable=False)
     completed = db.Column(db.Boolean, default=False, nullable=False)
     xp_claimed = db.Column(db.Boolean, default=False, nullable=False)
@@ -136,8 +136,8 @@ class UserChallengeProgress(db.Model):
     __tablename__ = "user_challenge_progress"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    challenge_id = db.Column(db.Integer, db.ForeignKey("challenges.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    challenge_id = db.Column(db.Integer, db.ForeignKey("challenges.id", ondelete="CASCADE"), nullable=False)
     current_value = db.Column(db.Integer, default=0, nullable=False)
     completed = db.Column(db.Boolean, default=False, nullable=False)
 
@@ -150,8 +150,8 @@ class UserBadge(db.Model):
     __tablename__ = "user_badges"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    badge_id = db.Column(db.Integer, db.ForeignKey("badges.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    badge_id = db.Column(db.Integer, db.ForeignKey("badges.id", ondelete="CASCADE"), nullable=False)
     unlocked_at = db.Column(
         db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False
     )
@@ -165,7 +165,7 @@ class ReadingDay(db.Model):
     __tablename__ = "reading_days"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     read_date = db.Column(db.Date, nullable=False)
     minutes = db.Column(db.Integer, default=0, nullable=False)
 

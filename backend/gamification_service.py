@@ -1,4 +1,5 @@
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timedelta
+from zoneinfo import ZoneInfo
 
 from backend.extensions import db
 from backend.models import (
@@ -12,7 +13,7 @@ from backend.models import (
     UserStats,
 )
 
-TZ = timezone.utc
+TZ = ZoneInfo("Asia/Ho_Chi_Minh")
 
 
 def _today() -> date:
@@ -93,11 +94,15 @@ def complete_timer_session(user_id: int, minutes: int) -> dict:
     if not progress.completed:
         progress.current_value = min(mission.target_value, progress.current_value + 1)
         if progress.current_value >= mission.target_value:
-            progress.completed = True
-            if not progress.xp_claimed:
-                stats.xp += mission.xp_reward
-                progress.xp_claimed = True
-                _try_unlock_badges(user_id, stats)
+            db.session.refresh(progress)
+            if progress.completed:
+                pass
+            else:
+                progress.completed = True
+                if not progress.xp_claimed:
+                    stats.xp += mission.xp_reward
+                    progress.xp_claimed = True
+                    _try_unlock_badges(user_id, stats)
 
     stats.total_read_minutes += minutes
     _sync_challenges(user_id, stats, minutes)
@@ -147,16 +152,35 @@ def _sync_challenges(user_id: int, stats: UserStats, minutes: int):
         if cp.current_value >= hours_challenge.target_value:
             cp.completed = True
 
+    books_challenge = Challenge.query.filter_by(slug="books-2-month").first()
+    if books_challenge:
+        cp = _challenge_progress(user_id, books_challenge.id)
+        cp.current_value = min(books_challenge.target_value, stats.books_completed)
+        if cp.current_value >= books_challenge.target_value:
+            cp.completed = True
+
 
 def _try_unlock_badges(user_id: int, stats: UserStats):
     completed_count = UserMissionProgress.query.filter_by(
         user_id=user_id, completed=True
+    ).count()
+    night_read_progress = UserMissionProgress.query.join(Mission).filter(
+        UserMissionProgress.user_id == user_id,
+        Mission.slug == "night-read",
+        UserMissionProgress.completed == True,
+    ).count()
+    notes_progress = UserMissionProgress.query.join(Mission).filter(
+        UserMissionProgress.user_id == user_id,
+        Mission.slug == "save-quotes",
+        UserMissionProgress.completed == True,
     ).count()
     rules = [
         ("newbie", completed_count >= 1),
         ("speed", stats.total_read_minutes >= 30),
         ("diamond", stats.current_streak >= 30),
         ("scholar", stats.books_completed >= 10),
+        ("night-owl", night_read_progress >= 5),
+        ("notekeeper", notes_progress >= 100),
     ]
     for slug, ok in rules:
         if not ok:

@@ -381,7 +381,7 @@
     }
   }
 
-  var timerState = { seconds: 0, total: 900, running: false, interval: null };
+  var timerState = { seconds: 0, total: 900, running: false, interval: null, startedAt: null };
 
   function updateTimerUI(display, ring) {
     const s = timerState.seconds;
@@ -400,26 +400,29 @@
     if (timerState.running) {
       clearInterval(timerState.interval);
       timerState.running = false;
+      timerState.startedAt = null;
       btn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">play_arrow</span> Tiếp tục';
       return;
     }
     timerState.running = true;
+    if (!timerState.startedAt) timerState.startedAt = Date.now();
     btn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">pause</span> Tạm dừng';
     timerState.interval = setInterval(async function () {
+      var elapsed = Math.floor((Date.now() - timerState.startedAt) / 1000);
+      var remaining = timerState.total - elapsed;
+      timerState.seconds = Math.max(0, remaining);
+      updateTimerUI(display, ring);
       if (timerState.seconds <= 0) {
         clearInterval(timerState.interval);
         timerState.running = false;
-        const minutes = Math.ceil(timerState.total / 60);
+        var minutes = Math.ceil(timerState.total / 60);
         try {
-          const { ok, data } = await api.post("/api/user/timer/complete", { minutes: minutes });
-          if (ok) { alert(data.message || "Hoàn thành!"); window.location.href = "mission.html"; }
-          else alert(data.error || "Chưa đủ thời gian.");
+          var _res = await api.post("/api/user/timer/complete", { minutes: minutes });
+          if (_res.ok) { alert(_res.data.message || "Hoàn thành!"); window.location.href = "mission.html"; }
+          else alert(_res.data.error || "Chưa đủ thời gian.");
         } catch (err) { alert(err.message || "Loi"); }
-        return;
       }
-      timerState.seconds -= 1;
-      updateTimerUI(display, ring);
-    }, 1000);
+    }, 200);
   }
 
   function resetCancelBtn(el) {

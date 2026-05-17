@@ -56,6 +56,12 @@ def create_app() -> Flask:
     _register_routes(app)
 
     with app.app_context():
+        from sqlalchemy import event
+        @event.listens_for(db.engine, "connect")
+        def _set_sqlite_pragma(dbapi_connection, _connection_record):
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys = ON")
+            cursor.close()
         db.create_all()
         seed_catalog()
 

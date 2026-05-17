@@ -4,6 +4,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from backend.extensions import db
 from backend.gamification_service import (
     activate_mission,
+    clear_active_mission,
     complete_timer_session,
     get_active_mission,
     get_gamification_payload,
@@ -48,7 +49,10 @@ def update_profile():
     user_id = int(get_jwt_identity())
     data = _json_body()
     age_raw = data.get("age")
-    age = int(age_raw) if age_raw not in (None, "") else None
+    try:
+        age = int(age_raw) if age_raw not in (None, "") else None
+    except (ValueError, TypeError):
+        return jsonify({"error": "Tuổi không hợp lệ."}), 400
     if age is not None and (age < 5 or age > 120):
         return jsonify({"error": "Tuổi không hợp lệ."}), 400
 
@@ -95,11 +99,32 @@ def mission_activate(mission_id: int):
 def mission_progress(mission_id: int):
     user_id = int(get_jwt_identity())
     data = _json_body()
-    amount = int(data.get("amount") or 1)
+    try:
+        amount = int(data.get("amount") or 1)
+    except (ValueError, TypeError):
+        return jsonify({"error": "Số lượng không hợp lệ."}), 400
     result = increment_mission_manual(user_id, mission_id, amount)
     if "error" in result:
         return jsonify(result), 404
     return jsonify(result)
+
+
+@user_bp.post("/missions/<int:mission_id>/cancel")
+@jwt_required()
+def mission_cancel(mission_id: int):
+    user_id = int(get_jwt_identity())
+    clear_active_mission(user_id)
+    return jsonify({"message": "Đã hủy nhiệm vụ."})
+
+
+@user_bp.post("/books/complete")
+@jwt_required()
+def book_complete():
+    user_id = int(get_jwt_identity())
+    stats = get_or_create_stats(user_id)
+    stats.books_completed += 1
+    db.session.commit()
+    return jsonify({"message": "Đã ghi nhận hoàn thành sách.", "books_completed": stats.books_completed})
 
 
 @user_bp.get("/timer/active")
@@ -126,7 +151,10 @@ def timer_active():
 def timer_complete():
     user_id = int(get_jwt_identity())
     data = _json_body()
-    minutes = int(data.get("minutes") or 0)
+    try:
+        minutes = int(data.get("minutes") or 0)
+    except (ValueError, TypeError):
+        return jsonify({"error": "Thời gian không hợp lệ."}), 400
     if minutes < 1:
         return jsonify({"error": "Thời gian không hợp lệ."}), 400
     result = complete_timer_session(user_id, minutes)

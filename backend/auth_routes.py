@@ -85,6 +85,19 @@ def me():
     return jsonify({"user": user.to_public_dict()})
 
 
+@auth_bp.post("/refresh")
+@jwt_required(refresh=True)
+def refresh():
+    user_id = int(get_jwt_identity())
+    user = db.session.get(User, user_id)
+    if not user or not user.is_active:
+        return jsonify({"error": "Phiên đăng nhập không hợp lệ."}), 401
+    response = jsonify({"message": "Đã làm mới phiên đăng nhập."})
+    access = create_access_token(identity=str(user_id))
+    set_access_cookies(response, access)
+    return response
+
+
 @auth_bp.get("/csrf")
 def csrf_token():
     """Trả về CSRF token (đã được Flask-JWT-Extended gắn vào cookie khi cần)."""
