@@ -61,16 +61,49 @@
     var loading = document.getElementById("recommendations-loading");
     var errEl = document.getElementById("recommendations-error");
     var commentEl = document.getElementById("ai-comment");
+    var commentSection = commentEl ? commentEl.parentElement : null;
     var emptyEl = document.getElementById("recommendations-empty");
     var refreshBtn = document.getElementById("ai-refresh-btn");
+    var clearBtn = document.getElementById("ai-clear-btn");
     if (!grid) return;
 
     function showRefreshBtn() {
       if (refreshBtn) refreshBtn.classList.remove("hidden");
     }
-
     function hideRefreshBtn() {
       if (refreshBtn) refreshBtn.classList.add("hidden");
+    }
+    function showClearBtn() {
+      if (clearBtn) clearBtn.classList.remove("hidden");
+    }
+    function hideClearBtn() {
+      if (clearBtn) clearBtn.classList.add("hidden");
+    }
+    function showEmptyState() {
+      if (emptyEl) emptyEl.classList.remove("hidden");
+      hideRefreshBtn();
+      hideClearBtn();
+    }
+    function hideEmptyState() {
+      if (emptyEl) emptyEl.classList.add("hidden");
+    }
+    function showComment(text) {
+      if (commentEl && text) {
+        commentEl.textContent = text;
+        if (commentSection) commentSection.classList.remove("hidden");
+      } else {
+        if (commentEl) commentEl.textContent = "";
+        if (commentSection) commentSection.classList.add("hidden");
+      }
+    }
+    function hasValidCache() {
+      var cached = localStorage.getItem(AI_CACHE_KEY);
+      if (!cached) return false;
+      try {
+        var parsed = JSON.parse(cached);
+        var recs = parsed.recommendations || [];
+        return recs.length > 0;
+      } catch (_) { return false; }
     }
 
     function getCurrentTitles() {
@@ -80,6 +113,33 @@
         var parsed = JSON.parse(cached);
         return (parsed.recommendations || []).map(function (b) { return b.title; });
       } catch (_) { return []; }
+    }
+
+    function clearRecommendations() {
+      localStorage.removeItem(AI_CACHE_KEY);
+      grid.innerHTML = "";
+      showComment("");
+      showEmptyState();
+    }
+
+    function renderFromCache() {
+      var cached = localStorage.getItem(AI_CACHE_KEY);
+      if (!cached) return false;
+      try {
+        var parsed = JSON.parse(cached);
+        var recs = parsed.recommendations || [];
+        if (recs.length === 0) return false;
+        grid.innerHTML = recs.map(renderRecommendationCard).join("");
+        showComment(parsed.comment);
+        hideEmptyState();
+        showRefreshBtn();
+        showClearBtn();
+        return true;
+      } catch (_) { return false; }
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", clearRecommendations);
     }
 
     if (refreshBtn) {
@@ -98,25 +158,26 @@
           var _ref2 = await api.post("/api/ai/recommendations/refresh", { exclude_titles: currentTitles });
           var ok2 = _ref2.ok, data2 = _ref2.data;
           if (!ok2) throw new Error(data2.error || "Không tải được đề xuất mới.");
-          // Append new recommendations
           var existing = [];
           var cached = localStorage.getItem(AI_CACHE_KEY);
           if (cached) { try { existing = JSON.parse(cached).recommendations || []; } catch (_) {} }
           var merged = existing.concat(data2.recommendations || []);
           var newCache = { recommendations: merged, comment: data2.comment || (function () { var c = localStorage.getItem(AI_CACHE_KEY); try { return JSON.parse(c).comment || ""; } catch (_) { return ""; } }()) };
           localStorage.setItem(AI_CACHE_KEY, JSON.stringify(newCache));
-          // Render new cards appended
           var newHtml = (data2.recommendations || []).map(renderRecommendationCard).join("");
           grid.insertAdjacentHTML("beforeend", newHtml);
           if (commentEl && data2.comment) {
             commentEl.textContent = data2.comment;
-            commentEl.parentElement.classList.remove("hidden");
+            if (commentSection) commentSection.classList.remove("hidden");
           }
+          hideEmptyState();
           showRefreshBtn();
+          showClearBtn();
         } catch (e) {
           if (e.status === 401) { window.location.href = "login.html"; return; }
           if (errEl) { errEl.textContent = e.message || "Lỗi tải đề xuất mới."; errEl.classList.remove("hidden"); }
           showRefreshBtn();
+          if (hasValidCache()) showClearBtn();
         } finally {
           if (loading) loading.classList.add("hidden");
           refreshBtn.disabled = false;
@@ -130,29 +191,14 @@
     var needsRefresh = localStorage.getItem("ai_needs_refresh") === "1";
 
     if (!needsRefresh) {
-      var cached = localStorage.getItem(AI_CACHE_KEY);
-      if (cached) {
-        try {
-          var parsed = JSON.parse(cached);
-          grid.innerHTML = (parsed.recommendations || []).map(renderRecommendationCard).join("");
-          if (commentEl && parsed.comment) {
-            commentEl.textContent = parsed.comment;
-            commentEl.parentElement.classList.remove("hidden");
-          }
-          if (loading) loading.classList.add("hidden");
-          showRefreshBtn();
-          return;
-        } catch (_) {}
-      }
-      // Không có cache và không có flag → hiển thị empty state
+      if (renderFromCache()) return;
       if (loading) loading.classList.add("hidden");
-      if (emptyEl) emptyEl.classList.remove("hidden");
+      showEmptyState();
       return;
     }
 
-    // Có flag: gọi AI, lưu cache
     localStorage.removeItem("ai_needs_refresh");
-    if (emptyEl) emptyEl.classList.add("hidden");
+    hideEmptyState();
     if (loading) {
       loading.classList.remove("hidden");
       loading.innerHTML = '<div class="flex items-center gap-3"><span class="ai-spinner text-primary"></span><span>AI đang phân tích sở thích của bạn...</span></div>';
@@ -163,13 +209,15 @@
       if (!ok) throw new Error(data.error || "Không tải được đề xuất.");
       localStorage.setItem(AI_CACHE_KEY, JSON.stringify(data));
       grid.innerHTML = (data.recommendations || []).map(renderRecommendationCard).join("");
-      if (commentEl && data.comment) {
-        commentEl.textContent = data.comment;
-        commentEl.parentElement.classList.remove("hidden");
-      }
+      showComment(data.comment);
+      hideEmptyState();
       showRefreshBtn();
+      showClearBtn();
     } catch (e) {
       if (e.status === 401) { window.location.href = "login.html"; return; }
+      if (!renderFromCache()) {
+        showEmptyState();
+      }
       if (errEl) { errEl.textContent = e.message || "Lỗi tải đề xuất."; errEl.classList.remove("hidden"); }
     } finally {
       if (loading) loading.classList.add("hidden");
