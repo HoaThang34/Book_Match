@@ -62,7 +62,70 @@
     var errEl = document.getElementById("recommendations-error");
     var commentEl = document.getElementById("ai-comment");
     var emptyEl = document.getElementById("recommendations-empty");
+    var refreshBtn = document.getElementById("ai-refresh-btn");
     if (!grid) return;
+
+    function showRefreshBtn() {
+      if (refreshBtn) refreshBtn.classList.remove("hidden");
+    }
+
+    function hideRefreshBtn() {
+      if (refreshBtn) refreshBtn.classList.add("hidden");
+    }
+
+    function getCurrentTitles() {
+      var cached = localStorage.getItem(AI_CACHE_KEY);
+      if (!cached) return [];
+      try {
+        var parsed = JSON.parse(cached);
+        return (parsed.recommendations || []).map(function (b) { return b.title; });
+      } catch (_) { return []; }
+    }
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", async function () {
+        var currentTitles = getCurrentTitles();
+        refreshBtn.disabled = true;
+        refreshBtn.innerHTML =
+          '<span class="ai-spinner text-primary"></span>' +
+          '<span>AI đang tìm đề xuất mới...</span>';
+        if (errEl) errEl.classList.add("hidden");
+        if (loading) {
+          loading.classList.remove("hidden");
+          loading.innerHTML = '<div class="flex items-center gap-3"><span class="ai-spinner text-primary"></span><span>AI đang tìm những gợi ý mới cho bạn...</span></div>';
+        }
+        try {
+          var _ref2 = await api.post("/api/ai/recommendations/refresh", { exclude_titles: currentTitles });
+          var ok2 = _ref2.ok, data2 = _ref2.data;
+          if (!ok2) throw new Error(data2.error || "Không tải được đề xuất mới.");
+          // Append new recommendations
+          var existing = [];
+          var cached = localStorage.getItem(AI_CACHE_KEY);
+          if (cached) { try { existing = JSON.parse(cached).recommendations || []; } catch (_) {} }
+          var merged = existing.concat(data2.recommendations || []);
+          var newCache = { recommendations: merged, comment: data2.comment || (function () { var c = localStorage.getItem(AI_CACHE_KEY); try { return JSON.parse(c).comment || ""; } catch (_) { return ""; } }()) };
+          localStorage.setItem(AI_CACHE_KEY, JSON.stringify(newCache));
+          // Render new cards appended
+          var newHtml = (data2.recommendations || []).map(renderRecommendationCard).join("");
+          grid.insertAdjacentHTML("beforeend", newHtml);
+          if (commentEl && data2.comment) {
+            commentEl.textContent = data2.comment;
+            commentEl.parentElement.classList.remove("hidden");
+          }
+          showRefreshBtn();
+        } catch (e) {
+          if (e.status === 401) { window.location.href = "login.html"; return; }
+          if (errEl) { errEl.textContent = e.message || "Lỗi tải đề xuất mới."; errEl.classList.remove("hidden"); }
+          showRefreshBtn();
+        } finally {
+          if (loading) loading.classList.add("hidden");
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML =
+            '<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: \'FILL\' 1;">auto_awesome</span>' +
+            '<span>Nhận đề xuất khác</span>';
+        }
+      });
+    }
 
     var needsRefresh = localStorage.getItem("ai_needs_refresh") === "1";
 
@@ -77,6 +140,7 @@
             commentEl.parentElement.classList.remove("hidden");
           }
           if (loading) loading.classList.add("hidden");
+          showRefreshBtn();
           return;
         } catch (_) {}
       }
@@ -103,6 +167,7 @@
         commentEl.textContent = data.comment;
         commentEl.parentElement.classList.remove("hidden");
       }
+      showRefreshBtn();
     } catch (e) {
       if (e.status === 401) { window.location.href = "login.html"; return; }
       if (errEl) { errEl.textContent = e.message || "Lỗi tải đề xuất."; errEl.classList.remove("hidden"); }

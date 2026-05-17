@@ -276,11 +276,19 @@
                 <div class="flex items-baseline justify-between pt-4 pb-2">
                         <h2 class="font-headline-lg-mobile md:text-headline-lg text-headline-lg-mobile text-on-surface">
                                 Các đề xuất hôm nay</h2>
-                        <a href="index.html" id="edit-survey-btn" title="Chỉnh sửa khảo sát"
-                                class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors text-sm font-semibold">
-                                <span class="material-symbols-outlined text-[16px]">edit</span>
-                                <span class="font-label-sm">Chỉnh sửa</span>
-                        </a>
+                        <div class="flex items-center gap-2">
+                                <button id="ai-refresh-btn"
+                                        class="hidden flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 text-secondary hover:text-secondary transition-colors text-sm font-semibold cursor-pointer"
+                                        title="Nhận thêm đề xuất sách khác từ AI">
+                                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                        <span>Nhận đề xuất khác</span>
+                                </button>
+                                <a href="index.html" id="edit-survey-btn" title="Chỉnh sửa khảo sát"
+                                        class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors text-sm font-semibold">
+                                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                                        <span class="font-label-sm">Chỉnh sửa</span>
+                                </a>
+                        </div>
                 </div>
                 <!-- AI Comment Section (hidden until data available) -->
                 <div id="ai-comment-section" class="hidden bg-surface-container border border-outline-variant/20 rounded-xl px-md py-sm flex items-start gap-sm">

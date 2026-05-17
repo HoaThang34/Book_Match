@@ -22,6 +22,7 @@ Nhiệm vụ: đề xuất đúng 3 cuốn sách phù hợp người dùng.
 - match_percent từ 75 đến 99 (số nguyên).
 - cover_keyword: 3-6 từ tiếng Anh mô tả bìa sách (dùng làm gợi ý hình ảnh).
 - comment: nhận xét ngắn 1-2 câu tiếng Việt về hồ sơ đọc sách của người dùng (tính cách, xu hướng, gợi ý thêm).
+- TUYỆT ĐỐI KHÔNG đề xuất lại bất kỳ cuốn sách nào đã nằm trong danh sách "Sách cần tránh" (nếu có).
 
 CHỈ trả về JSON hợp lệ, không markdown, không giải thích ngoài JSON:
 {{
@@ -57,10 +58,18 @@ def _profile_context(profile: UserProfile | None, stats: UserStats | None) -> st
     return "\n".join(parts)
 
 
-def get_book_recommendations(profile: UserProfile | None, stats: UserStats | None) -> dict:
+def get_book_recommendations(
+    profile: UserProfile | None,
+    stats: UserStats | None,
+    exclude_titles: list[str] | None = None,
+) -> dict:
     now = datetime.now(TZ)
     system = _build_recommendation_system_prompt(now)
-    user_msg = f"Thông tin người dùng:\n{_profile_context(profile, stats)}\n\nĐề xuất 3 cuốn sách."
+    user_msg = f"Thông tin người dùng:\n{_profile_context(profile, stats)}"
+    if exclude_titles:
+        titles_str = ", ".join(f'"{t}"' for t in exclude_titles)
+        user_msg += f"\n\nSách cần tránh (KHÔNG đề xuất lại): {titles_str}"
+    user_msg += "\n\nĐề xuất 3 cuốn sách KHÁC NHAU, không trùng với danh sách trên."
 
     raw = chat_completion(system, user_msg)
     data = extract_json(raw)
