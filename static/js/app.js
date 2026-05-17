@@ -61,12 +61,12 @@
     var loading = document.getElementById("recommendations-loading");
     var errEl = document.getElementById("recommendations-error");
     var commentEl = document.getElementById("ai-comment");
+    var emptyEl = document.getElementById("recommendations-empty");
     if (!grid) return;
 
     var needsRefresh = localStorage.getItem("ai_needs_refresh") === "1";
 
     if (!needsRefresh) {
-      // Load từ cache
       var cached = localStorage.getItem(AI_CACHE_KEY);
       if (cached) {
         try {
@@ -80,16 +80,19 @@
           return;
         } catch (_) {}
       }
-      // Không có cache và không có flag → không gọi AI, hiển thị prompt điền khảo sát
-      if (loading) {
-        loading.textContent = "Hãy điền khảo sát để nhận đề xuất cá nhân hóa từ AI.";
-      }
+      // Không có cache và không có flag → hiển thị empty state
+      if (loading) loading.classList.add("hidden");
+      if (emptyEl) emptyEl.classList.remove("hidden");
       return;
     }
 
     // Có flag: gọi AI, lưu cache
     localStorage.removeItem("ai_needs_refresh");
-    if (loading) loading.textContent = "Đang tải đề xuất từ AI...";
+    if (emptyEl) emptyEl.classList.add("hidden");
+    if (loading) {
+      loading.classList.remove("hidden");
+      loading.innerHTML = '<div class="flex items-center gap-3"><span class="ai-spinner text-primary"></span><span>AI đang phân tích sở thích của bạn...</span></div>';
+    }
     try {
       var _ref = await api.get("/api/ai/recommendations");
       var ok = _ref.ok, data = _ref.data;

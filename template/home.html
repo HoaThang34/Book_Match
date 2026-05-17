@@ -198,6 +198,23 @@
                         scrollbar-width: none;
                 }
         </style>
+        <style>
+                @keyframes ai-spin {
+                        to {
+                                transform: rotate(360deg);
+                        }
+                }
+                .ai-spinner {
+                        display: inline-block;
+                        width: 24px;
+                        height: 24px;
+                        border: 3px solid currentColor;
+                        border-top-color: transparent;
+                        border-radius: 50%;
+                        animation: ai-spin 0.8s linear infinite;
+                        flex-shrink: 0;
+                }
+        </style>
         <style data-stitch-cursor=""></style>
         <style data-stitch-scroll-lock=""></style>
 </head>
@@ -271,136 +288,19 @@
                         <p id="ai-comment" class="font-body-md text-body-md text-on-surface-variant italic"></p>
                 </div>
                 <p id="recommendations-error" class="hidden text-error font-body-md mb-4"></p>
-                <p id="recommendations-loading" class="font-body-md text-on-surface-variant mb-4">Hãy điền khảo sát để nhận đề xuất cá nhân hóa từ AI.</p>
+                <div id="recommendations-loading" class="hidden font-body-md text-on-surface-variant mb-4"></div>
+                <div id="recommendations-empty" class="flex flex-col items-center justify-center py-16 text-center">
+                        <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">auto_awesome</span>
+                        <h3 class="font-headline-md text-on-surface mb-2">Chưa có đề xuất nào</h3>
+                        <p class="font-body-md text-on-surface-variant mb-6 max-w-md">Hãy điền khảo sát để nhận những đề xuất sách được cá nhân hóa dành riêng cho bạn từ AI.</p>
+                        <a href="index.html"
+                                class="bg-primary-container text-white font-label-lg text-label-lg py-[18px] px-xl rounded-full inline-flex items-center justify-center gap-sm shadow-[0_10px_30px_rgba(255,107,0,0.3)] hover:bg-primary hover:-translate-y-1 active:translate-y-0 active:scale-95 transition-all">
+                                <span class="material-symbols-outlined icon-fill text-[20px]">edit_note</span>
+                                Điền khảo sát ngay
+                        </a>
+                </div>
                 <div id="recommendations-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
                         <!-- dynamic -->
-                        <article class="hidden">
-                                <div class="h-64 w-full bg-surface-variant relative">
-                                        <img alt="Book Cover"
-                                                class="w-full h-full object-cover opacity-90 transition-all duration-500"
-                                                data-alt="A highly detailed close-up of a modern, intellectual book cover with an abstract geometric design. The lighting is dramatic and moody, casting soft shadows across the textured paper surface. Deep blacks and pristine whites dominate the palette, highlighted by a subtle glowing orange accent reflecting the high-contrast gamification style. The overall aesthetic is scholarly yet energetic and technologically advanced."
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-mMrQeg0v6lBpze6JiP0w59byCbsWlkkYZhnud8oXzMjxwKvaJ8x63Xd4Z9sOlKOKNM26xzpxr1HajtokmsFdtxTsqnRk-dlGU7m8GhYbhgSaRiFNpTwGw5H72DhC6qk9vkwyggRezEo-M83KJvHkov1MTQHxM0BhMWyenw42loVyYAesb7bcR9poaqpUBsRIvtsceBOhh7HYyaJChJoVn3Py8fjXWCzC7EIsO5uuK_NcSP7MSRkartNDeNPzdzPzFeXq9wRMpJs">
-                                        <div
-                                                class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent">
-                                        </div>
-                                        <div
-                                                class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
-                                                98% AI Match
-                                        </div>
-                                </div>
-                                <div
-                                        class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
-                                        <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Tư Duy Nhanh
-                                                Và Chậm</h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Daniel
-                                                Kahneman</p>
-                                        <p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
-                                                Cuốn sách khám phá hai hệ thống chi phối cách chúng ta suy nghĩ: Hệ
-                                                thống 1 nhanh, trực giác và cảm xúc; Hệ thống 2 chậm, có chủ ý và logic.
-                                                Hiểu rõ chúng giúp ta đưa ra quyết định tốt hơn trong cuộc sống và công
-                                                việc.
-                                        </p>
-                                        <div
-                                                class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
-                                                <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                                class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
-                                                        <h4 class="font-label-lg text-label-lg text-primary">Tại sao nó
-                                                                phù hợp với bạn</h4>
-                                                </div>
-                                                <p class="font-body-md text-body-md text-on-surface-variant text-sm">
-                                                        Dựa trên lịch sử đọc về tâm lý học hành vi và mục tiêu cải thiện
-                                                        khả năng ra quyết định chiến lược của bạn trong tuần này.
-                                                </p>
-                                        </div>
-                                </div>
-                        </article>
-                        <!-- Book Card 2 -->
-                        <article
-                                class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 relative group">
-                                <div class="h-64 w-full bg-surface-variant relative">
-                                        <img alt="Book Cover"
-                                                class="w-full h-full object-cover opacity-90 transition-all duration-500"
-                                                data-alt="An artistic, slightly out-of-focus shot of a stack of hardcover books resting on a sleek dark wooden desk. A single beam of energetic, high-contrast orange light cuts across the dark room, illuminating the spine of the top book. The scene embodies a modern corporate yet deeply scholarly mood, with deep shadowy undertones to reduce visual fatigue."
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6nVuDBAb0EZbVlVs2GeFA3bg8szeDTE9ogv64vjLPxwake-nYaawwd6VK1Lq-Ty38p_fyldzV1IhHckur_57XRLSy-ts9MmhrJKYQQ8IYeTTpZ0n0cuABvRVwkKIsPFgMNlCRtDRWC-9me3TO2JnOmGKThvzSxawzGX0WYdympWpaevT5ZQ-uyX6b2h84P7kGuNb1Gu7Bvq2M5_qSzliLdUdrF12w_kjf3QqOwucrENtns7L3e-31W6gNUlU1roB2h37rkD-TCts">
-                                        <div
-                                                class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent">
-                                        </div>
-                                        <div
-                                                class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
-                                                92% AI Match
-                                        </div>
-                                </div>
-                                <div
-                                        class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
-                                        <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Deep Work
-                                        </h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">Cal Newport
-                                        </p>
-                                        <p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
-                                                Quy tắc cho sự thành công tập trung trong một thế giới phân tán. Khám
-                                                phá cách rèn luyện khả năng tập trung sâu độ để tạo ra giá trị đột phá
-                                                và hoàn thành các nhiệm vụ phức tạp nhanh chóng hơn.
-                                        </p>
-                                        <div
-                                                class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
-                                                <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                                class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
-                                                        <h4 class="font-label-lg text-label-lg text-primary">Tại sao nó
-                                                                phù hợp với bạn</h4>
-                                                </div>
-                                                <p class="font-body-md text-body-md text-on-surface-variant text-sm">
-                                                        Phân tích dữ liệu cho thấy bạn thường mất tập trung sau 20 phút.
-                                                        Cuốn sách này cung cấp các phương pháp thực tế để kéo dài chuỗi
-                                                        Focus của bạn.
-                                                </p>
-                                        </div>
-                                </div>
-                        </article>
-                        <!-- Book Card 3 -->
-                        <article
-                                class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 relative group">
-                                <div class="h-64 w-full bg-surface-variant relative">
-                                        <img alt="Book Cover"
-                                                class="w-full h-full object-cover opacity-90 transition-all duration-500"
-                                                data-alt="A minimalist overhead view of a modern reading setup. A sleek e-reader device sits next to a steaming cup of coffee on a dark, textured slate table. Soft, glowing ambient light creates subtle gradients, while small bright UI elements on the e-reader screen introduce pops of vibrant color. The mood is immersive, focused, and technologically enhanced for long reading sessions."
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDbLnzy_LPQ1hwwnU_4CSwo58VzAsD83gUEDRNPViRI9li-ICD52KXXp5n2Ip746v5uv_dFyY8zK5HjEYYzoQ93x0N-XxLlr-pjHPRVrziVlRcGtVmrw0nwWRLoBswukbW1MB6sHgROgoMtdR29VhgagfcPbGNuJXeVm83P1TWWk0dig8hEXMfGJOv2c8SnZfbbXS30_wLljja178OAp1FVhP_XtwS6vi7w9NTpltRy9rlVx2NirdegFQ4LzoKpeerqXw57j88ygE">
-                                        <div
-                                                class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent">
-                                        </div>
-                                        <div
-                                                class="absolute top-4 right-4 bg-primary-container text-on-primary-container font-label-lg text-label-lg px-3 py-1 rounded-full shadow-md backdrop-blur-md">
-                                                88% AI Match
-                                        </div>
-                                </div>
-                                <div
-                                        class="p-6 relative z-10 -mt-12 bg-surface-container-lowest/95 backdrop-blur-xl rounded-t-xl border-t border-outline-variant/20">
-                                        <h3 class="font-headline-md text-headline-md text-on-surface mb-1">Atomic Habits
-                                        </h3>
-                                        <p class="font-body-md text-body-md text-on-surface-variant mb-4">James Clear
-                                        </p>
-                                        <p class="font-body-md text-body-md text-on-surface/90 line-clamp-3 mb-6">
-                                                Thay đổi nhỏ, hiệu quả bất ngờ. Hướng dẫn toàn diện để phá vỡ thói quen
-                                                xấu và xây dựng những thói quen tốt thông qua những cải tiến 1% mỗi
-                                                ngày, áp dụng cho mọi khía cạnh cuộc sống.
-                                        </p>
-                                        <div
-                                                class="bg-surface-container border border-outline-variant/30 rounded-lg p-4">
-                                                <div class="flex items-center gap-2 mb-2">
-                                                        <span
-                                                                class="material-symbols-outlined text-primary icon-fill text-[18px]">auto_awesome</span>
-                                                        <h4 class="font-label-lg text-label-lg text-primary">Tại sao nó
-                                                                phù hợp với bạn</h4>
-                                                </div>
-                                                <p class="font-body-md text-body-md text-on-surface-variant text-sm">
-                                                        Đồng bộ hoàn hảo với mục tiêu duy trì "Chuỗi 5 ngày" hiện tại
-                                                        của bạn. Cung cấp nền tảng lý thuyết cho hệ thống gamification
-                                                        bạn đang trải nghiệm.
-                                                </p>
-                                        </div>
-                                </div>
-                        </article>
                 </div>
         </main>
         <script src="/static/js/api.js"></script>
