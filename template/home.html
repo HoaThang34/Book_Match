@@ -317,6 +317,18 @@
                         <!-- dynamic -->
                 </div>
         </main>
+        <!-- Delete Confirmation Popup -->
+        <div id="delete-popup" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                <div class="bg-surface rounded-2xl shadow-2xl p-8 mx-4 max-w-sm w-full text-center border border-outline-variant/20">
+                        <span class="material-symbols-outlined text-5xl text-error mb-4" style="font-variation-settings: 'FILL' 1;">warning</span>
+                        <p class="font-headline-md text-on-surface mb-2">Xóa tất cả đề xuất?</p>
+                        <p class="font-body-md text-on-surface-variant mb-6">Hành động này sẽ xóa toàn bộ dữ liệu đề xuất và không thể khôi phục.</p>
+                        <div class="flex flex-col gap-3">
+                                <button id="delete-confirm-btn" type="button" class="w-full bg-error text-white font-label-lg py-3 rounded-full hover:bg-error/90 transition-all active:scale-95">Đồng ý</button>
+                                <button id="delete-dismiss-btn" type="button" class="w-full bg-surface-container-high text-on-surface font-label-lg py-3 rounded-full hover:bg-surface-container-highest transition-all active:scale-95">Không</button>
+                        </div>
+                </div>
+        </div>
         <script src="/static/js/api.js"></script>
         <script src="/static/js/app.js"></script>
         <!-- Fixed Bottom CTA -->

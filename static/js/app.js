@@ -138,8 +138,25 @@
       } catch (_) { return false; }
     }
 
+    var deletePopup = document.getElementById("delete-popup");
+    var deleteConfirmBtn = document.getElementById("delete-confirm-btn");
+    var deleteDismissBtn = document.getElementById("delete-dismiss-btn");
+
     if (clearBtn) {
-      clearBtn.addEventListener("click", clearRecommendations);
+      clearBtn.addEventListener("click", function () {
+        if (deletePopup) deletePopup.classList.remove("hidden");
+      });
+    }
+    if (deleteConfirmBtn) {
+      deleteConfirmBtn.addEventListener("click", function () {
+        clearRecommendations();
+        if (deletePopup) deletePopup.classList.add("hidden");
+      });
+    }
+    if (deleteDismissBtn) {
+      deleteDismissBtn.addEventListener("click", function () {
+        if (deletePopup) deletePopup.classList.add("hidden");
+      });
     }
 
     if (refreshBtn) {
