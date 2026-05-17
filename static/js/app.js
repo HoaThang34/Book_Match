@@ -292,12 +292,18 @@
     }, 1000);
   }
 
+  function resetCancelBtn(el) {
+    el.disabled = false;
+    el.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">close</span> Hủy nhiệm vụ';
+  }
+
   async function initTimer() {
     const main = document.getElementById("timer-main");
     const display = document.getElementById("timer-display");
     const btn = document.getElementById("timer-btn");
     const ring = document.getElementById("timer-ring");
     const status = document.getElementById("timer-mission-title");
+    const cancelBtn = document.getElementById("timer-cancel-btn");
     if (!main) return;
     try {
       const { ok, data } = await api.get("/api/user/timer/active");
@@ -312,6 +318,32 @@
       if (status) status.textContent = data.mission.title;
       updateTimerUI(display, ring);
       if (btn) btn.addEventListener("click", function () { toggleTimer(display, ring, btn); });
+      if (cancelBtn) {
+        cancelBtn.classList.remove("hidden");
+        cancelBtn.addEventListener("click", function () {
+          document.getElementById("cancel-popup").classList.remove("hidden");
+        });
+        document.getElementById("cancel-confirm-btn").addEventListener("click", async function () {
+          document.getElementById("cancel-popup").classList.add("hidden");
+          cancelBtn.disabled = true;
+          cancelBtn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">sync</span> Đang hủy...';
+          if (timerState.running) {
+            clearInterval(timerState.interval);
+            timerState.running = false;
+          }
+          try {
+            await api.post("/api/user/missions/" + data.mission.id + "/cancel", {});
+            window.location.href = "mission.html";
+          } catch (_) {
+            cancelBtn.disabled = false;
+            cancelBtn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">close</span> Thất bại';
+            setTimeout(function () { resetCancelBtn(cancelBtn); }, 3000);
+          }
+        });
+        document.getElementById("cancel-dismiss-btn").addEventListener("click", function () {
+          document.getElementById("cancel-popup").classList.add("hidden");
+        });
+      }
     } catch (e) {
       if (e.status === 401) window.location.href = "login.html";
     }
