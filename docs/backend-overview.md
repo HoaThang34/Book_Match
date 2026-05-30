@@ -1,8 +1,8 @@
-# Tổng quan Backend – AI Reader
+# Tổng quan Backend – Book Match
 
 ## Mục đích
 
-Backend Python phục vụ xác thực, gamification (nhiệm vụ, chuỗi ngày), và gợi ý sách qua Ollama cho ứng dụng AI Reader.
+Backend Python phục vụ xác thực, gamification (nhiệm vụ, chuỗi ngày), và gợi ý sách qua Ollama cho ứng dụng Book Match.
 
 ## Công nghệ
 

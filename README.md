@@ -1,4 +1,4 @@
-# AI Reader
+# Book Match – AI đồng hành cùng văn hóa đọc tại Đại học Thủ Dầu Một
 
 Nền tảng đọc sách thông minh tích hợp AI, giúp cá nhân hóa gợi ý sách, xây dựng thói quen đọc qua gamification và duy trì tập trung với Pomodoro timer.
 
@@ -15,7 +15,7 @@ Nền tảng đọc sách thông minh tích hợp AI, giúp cá nhân hóa gợi
 ## Kiến trúc
 
 ```
-AI Reader
+Book Match
 ├── backend/           # Flask API (Python)
 │   ├── auth_routes.py, auth_service.py, validators.py
 │   ├── ai_routes.py, ai_service.py, ollama_service.py

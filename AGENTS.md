@@ -1,4 +1,4 @@
-# AI Reader — Agent guide
+# Book Match — Agent guide
 
 All user-facing strings, API responses, docs, and HTML are in **Vietnamese**.
 
@@ -21,7 +21,7 @@ pytest tests/ -v        # uses in-memory SQLite, no .env needed
 - Security headers set globally via `after_request`
 
 ```
-AI_Reader/
+Book_Match/
 ├── backend/           # Flask API (Python)
 │   ├── __init__.py        # create_app(), security headers, routes
 │   ├── config.py          # Config class, env vars, _require(), _resolve_database_uri()
