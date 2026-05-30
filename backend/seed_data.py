@@ -161,21 +161,25 @@ COMMENT_TEMPLATES = [
     "Tôi đã giới thiệu cuốn này cho cả gia đình và ai cũng thích.",
 ]
 
-COMMENT_BOOK_IDS = list(range(1, 190))
-
 
 def _seed_book_comments():
-    if BookComment.query.count() > 0:
+    from backend.library_service import get_library
+    books = get_library()
+    if not books:
         return
     users = User.query.all()
     if not users:
         return
+    existing = db.session.query(BookComment.book_id).distinct().all()
+    seeded_ids = {row[0] for row in existing}
+    missing_ids = [b["id"] for b in books if b["id"] not in seeded_ids]
+    if not missing_ids:
+        return
     now = datetime.now(timezone.utc)
-    chosen_books = random.sample(COMMENT_BOOK_IDS, min(80, len(COMMENT_BOOK_IDS)))
-    for book_id in chosen_books:
+    for book_id in missing_ids:
         num_comments = random.randint(2, 5)
-        commenters = random.sample(users, min(num_comments, len(users)))
-        for i, user in enumerate(commenters):
+        commenters = random.choices(users, k=num_comments)
+        for user in commenters:
             content = random.choice(COMMENT_TEMPLATES)
             created_at = now - timedelta(days=random.randint(0, 60), hours=random.randint(0, 23))
             db.session.add(BookComment(
