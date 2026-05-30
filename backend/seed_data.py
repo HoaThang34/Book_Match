@@ -1,7 +1,8 @@
-from datetime import datetime, timezone
+import random
+from datetime import datetime, timedelta, timezone
 
 from backend.extensions import db
-from backend.models import Badge, Challenge, Mission, User, UserStats
+from backend.models import Badge, BookComment, Challenge, Mission, User, UserStats
 
 
 def seed_catalog():
@@ -9,6 +10,7 @@ def seed_catalog():
     _seed_challenges()
     _seed_badges()
     _seed_leaderboard_users()
+    _seed_book_comments()
     db.session.commit()
 
 
@@ -129,3 +131,56 @@ def _seed_leaderboard_users():
             total_read_minutes=minutes,
             xp=xp,
         ))
+
+
+COMMENT_TEMPLATES = [
+    "Một cuốn sách tuyệt vời! Tôi đã học được rất nhiều điều từ nó.",
+    "Đây là một trong những cuốn sách hay nhất tôi từng đọc. Rất đáng để đọc.",
+    "Nội dung sâu sắc và ý nghĩa. Tôi sẽ đọc lại nhiều lần.",
+    "Sách viết rất dễ hiểu, phù hợp cho người mới bắt đầu.",
+    "Tác giả có cách diễn đạt rất cuốn hút. Đọc một lần không thể dừng lại.",
+    "Một góc nhìn hoàn toàn mới mẻ về vấn đề. Rất khai sáng.",
+    "Tôi đã áp dụng những kiến thức từ cuốn sách này vào thực tế và thấy hiệu quả bất ngờ.",
+    "Nên đọc ít nhất một lần trong đời. Cuốn sách thay đổi tư duy.",
+    "Sách hay nhưng cần tập trung để hiểu hết được những ý tưởng chính.",
+    "Rất thực tế và dễ áp dụng. Tôi giới thiệu cho tất cả bạn bè của mình.",
+    "Văn phong mượt mà, dịch thuật tốt. Nội dung cuốn hút từ đầu đến cuối.",
+    "Một tác phẩm kinh điển không thể bỏ qua. Giá trị vượt thời gian.",
+    "Đây là lần thứ hai tôi đọc cuốn sách này và vẫn tìm thấy những điều mới mẻ.",
+    "Sách giúp tôi thay đổi cách nhìn nhận vấn đề. Thực sự hữu ích.",
+    "Nếu bạn chỉ đọc một cuốn sách trong năm nay, hãy đọc cuốn này.",
+    "Tôi yêu cách tác giả kết hợp giữa lý thuyết và thực hành.",
+    "Cuốn sách mở ra một thế giới mới mà tôi chưa từng biết đến.",
+    "Đọc xong tôi cảm thấy được truyền cảm hứng rất lớn.",
+    "Mỗi chương đều chứa đựng những bài học quý giá.",
+    "Tôi ước mình đã đọc cuốn sách này sớm hơn.",
+    "Kiến thức trong sách được trình bày rất khoa học và logic.",
+    "Một cuốn sách chữa lành tâm hồn. Đọc xong thấy nhẹ nhàng hơn.",
+    "Các ví dụ trong sách rất thực tế và dễ hình dung.",
+    "Sách phù hợp cho mọi lứa tuổi. Nội dung nhân văn và sâu sắc.",
+    "Tôi đã giới thiệu cuốn này cho cả gia đình và ai cũng thích.",
+]
+
+COMMENT_BOOK_IDS = list(range(1, 190))
+
+
+def _seed_book_comments():
+    if BookComment.query.count() > 0:
+        return
+    users = User.query.all()
+    if not users:
+        return
+    now = datetime.now(timezone.utc)
+    chosen_books = random.sample(COMMENT_BOOK_IDS, min(80, len(COMMENT_BOOK_IDS)))
+    for book_id in chosen_books:
+        num_comments = random.randint(2, 5)
+        commenters = random.sample(users, min(num_comments, len(users)))
+        for i, user in enumerate(commenters):
+            content = random.choice(COMMENT_TEMPLATES)
+            created_at = now - timedelta(days=random.randint(0, 60), hours=random.randint(0, 23))
+            db.session.add(BookComment(
+                book_id=book_id,
+                user_id=user.id,
+                content=content,
+                created_at=created_at,
+            ))

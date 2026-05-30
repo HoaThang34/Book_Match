@@ -665,6 +665,13 @@
     var popupCategoryIcon = document.getElementById("popup-category-icon");
     var popupContent = document.getElementById("popup-content");
     var popupClose = document.getElementById("popup-close");
+    var commentsList = document.getElementById("comments-list");
+    var commentsLoading = document.getElementById("comments-loading");
+    var commentCount = document.getElementById("comment-count");
+    var commentInput = document.getElementById("comment-input");
+    var commentSubmit = document.getElementById("comment-submit");
+    var commentError = document.getElementById("comment-error");
+    var commentLoginPrompt = document.getElementById("comment-login-prompt");
     if (!container) return;
 
     var allBooks = [];
@@ -715,11 +722,64 @@
       });
     }
 
+    var currentBookId = null;
+
+    function renderComment(c) {
+      var initials = (c.user_name || "?").split(" ").map(function (w) { return w[0]; }).join("").toUpperCase().slice(0, 2);
+      var timeAgo = "";
+      if (c.created_at) {
+        var d = new Date(c.created_at);
+        var now = new Date();
+        var diff = Math.floor((now - d) / 1000);
+        if (diff < 60) timeAgo = "Vừa xong";
+        else if (diff < 3600) timeAgo = Math.floor(diff / 60) + " phút trước";
+        else if (diff < 86400) timeAgo = Math.floor(diff / 3600) + " giờ trước";
+        else if (diff < 2592000) timeAgo = Math.floor(diff / 86400) + " ngày trước";
+        else timeAgo = d.toLocaleDateString("vi-VN");
+      }
+      return (
+        '<div class="flex gap-3 p-3 bg-surface-container-low rounded-xl">' +
+        '<div class="w-8 h-8 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-label-sm font-bold text-sm flex-shrink-0">' + initials + '</div>' +
+        '<div class="flex-1 min-w-0">' +
+        '<div class="flex items-center gap-2 mb-1">' +
+        '<span class="font-label-sm font-semibold text-on-surface">' + escapeHtml(c.user_name) + '</span>' +
+        '<span class="font-label-sm text-on-surface-variant text-xs">' + timeAgo + '</span>' +
+        '</div>' +
+        '<p class="font-body-md text-on-surface-variant text-sm">' + escapeHtml(c.content) + '</p>' +
+        '</div></div>'
+      );
+    }
+
+    async function loadComments(bookId) {
+      if (!commentsList || !commentsLoading) return;
+      commentsLoading.classList.remove("hidden");
+      commentsList.innerHTML = "";
+      try {
+        var _r = await api.get("/api/library/" + bookId + "/comments");
+        if (_r.ok) {
+          var cmts = _r.data.comments || [];
+          if (commentCount) commentCount.textContent = "(" + cmts.length + ")";
+          if (cmts.length === 0) {
+            commentsList.innerHTML = '<p class="font-body-md text-on-surface-variant text-sm py-2 text-center">Chưa có bình luận nào. Hãy là người đầu tiên!</p>';
+          } else {
+            commentsList.innerHTML = cmts.map(renderComment).join("");
+          }
+        }
+      } catch (e) {}
+      commentsLoading.classList.add("hidden");
+    }
+
     async function openBookDetail(id) {
+      currentBookId = id;
       if (!popup) return;
       popupTitle.textContent = "Đang tải...";
       popupContent.textContent = "";
       popup.classList.remove("hidden");
+      if (commentsList) commentsList.innerHTML = "";
+      if (commentCount) commentCount.textContent = "(0)";
+      if (commentError) commentError.classList.add("hidden");
+      if (commentInput) commentInput.value = "";
+      if (commentSubmit) commentSubmit.disabled = true;
       try {
         var _ref = await api.get("/api/library/" + id);
         if (!_ref.ok) throw new Error(_ref.data.error || "Lỗi");
@@ -729,6 +789,7 @@
         if (popupCategory) popupCategory.textContent = book.category.title;
         if (popupCategoryIcon) popupCategoryIcon.textContent = book.category.icon || "book";
         popupContent.textContent = content;
+        loadComments(id);
       } catch (e) {
         popupContent.textContent = e.message || "Không thể tải nội dung sách.";
       }
@@ -741,6 +802,55 @@
       popup.addEventListener("click", function (e) {
         if (e.target === popup) popup.classList.add("hidden");
       });
+    }
+
+    if (commentInput && commentSubmit) {
+      commentInput.addEventListener("input", function () {
+        var val = commentInput.value.trim();
+        commentSubmit.disabled = val.length === 0 || val.length > 1000;
+      });
+      commentSubmit.addEventListener("click", async function () {
+        if (!currentBookId || !commentInput) return;
+        var val = commentInput.value.trim();
+        if (!val || val.length > 1000) return;
+        commentSubmit.disabled = true;
+        if (commentError) commentError.classList.add("hidden");
+        try {
+          var _res = await api.post("/api/library/" + currentBookId + "/comments", { content: val });
+          if (!_res.ok) {
+            if (commentError) {
+              commentError.textContent = _res.data.error || "Không thể gửi bình luận.";
+              commentError.classList.remove("hidden");
+            }
+            commentSubmit.disabled = false;
+            return;
+          }
+          commentInput.value = "";
+          commentSubmit.disabled = true;
+          loadComments(currentBookId);
+        } catch (e) {
+          if (e.status === 401) {
+            window.location.href = "login.html";
+            return;
+          }
+          if (commentError) {
+            commentError.textContent = e.message || "Lỗi kết nối.";
+            commentError.classList.remove("hidden");
+          }
+          commentSubmit.disabled = false;
+        }
+      });
+    }
+
+    if (commentLoginPrompt) {
+      try {
+        var _ck = await api.get("/api/user/stats");
+        if (_ck.ok) commentLoginPrompt.classList.add("hidden");
+      } catch (e) {
+        commentLoginPrompt.classList.remove("hidden");
+        if (commentInput) commentInput.disabled = true;
+        if (commentSubmit) commentSubmit.disabled = true;
+      }
     }
 
     if (searchInput) {
