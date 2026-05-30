@@ -168,5 +168,6 @@ class ReadingDay(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     read_date = db.Column(db.Date, nullable=False)
     minutes = db.Column(db.Integer, default=0, nullable=False)
+    journal = db.Column(db.Text, nullable=True)
 
     __table_args__ = (db.UniqueConstraint("user_id", "read_date", name="uq_user_read_date"),)

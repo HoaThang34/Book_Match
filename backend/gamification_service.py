@@ -73,11 +73,18 @@ def get_active_mission(user_id: int) -> Mission | None:
     return db.session.get(Mission, stats.active_mission_id)
 
 
-def complete_timer_session(user_id: int, minutes: int) -> dict:
+def _word_count(text: str) -> int:
+    return len(text.strip().split()) if text.strip() else 0
+
+
+def complete_timer_session(user_id: int, minutes: int, journal: str = "") -> dict:
     stats = get_or_create_stats(user_id)
     mission = get_active_mission(user_id)
     if not mission:
         return {"error": "Chưa xác định nhiệm vụ."}
+
+    if _word_count(journal) < 30:
+        return {"error": "Vui lòng viết ít nhất 30 từ về cuốn sách bạn đã đọc hôm nay để ghi nhận."}
 
     required = mission.timer_minutes or 15
     if minutes < required:
@@ -87,7 +94,7 @@ def complete_timer_session(user_id: int, minutes: int) -> dict:
         }
 
     today = _today()
-    _record_reading_day(user_id, today, minutes)
+    _record_reading_day(user_id, today, minutes, journal)
     _update_streak(stats, today)
 
     progress = _mission_progress(user_id, mission.id)
@@ -117,12 +124,14 @@ def complete_timer_session(user_id: int, minutes: int) -> dict:
     }
 
 
-def _record_reading_day(user_id: int, read_date: date, minutes: int):
+def _record_reading_day(user_id: int, read_date: date, minutes: int, journal: str = ""):
     row = ReadingDay.query.filter_by(user_id=user_id, read_date=read_date).first()
     if row:
         row.minutes += minutes
+        if journal:
+            row.journal = journal
     else:
-        db.session.add(ReadingDay(user_id=user_id, read_date=read_date, minutes=minutes))
+        db.session.add(ReadingDay(user_id=user_id, read_date=read_date, minutes=minutes, journal=journal or None))
 
 
 def _update_streak(stats: UserStats, today: date):

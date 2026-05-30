@@ -20,6 +20,7 @@ ALLOWED_PAGES = {
     "timer",
     "mission",
     "streak",
+    "leaderboard",
 }
 
 
@@ -63,9 +64,21 @@ def create_app() -> Flask:
             cursor.execute("PRAGMA foreign_keys = ON")
             cursor.close()
         db.create_all()
+        _migrate_existing_db()
         seed_catalog()
 
     return app
+
+def _migrate_existing_db():
+    """Add missing columns to existing tables (idempotent)."""
+    from flask import current_app
+    from sqlalchemy import inspect
+    inspector = inspect(db.engine)
+    cols = {c["name"] for c in inspector.get_columns("reading_days")}
+    if "journal" not in cols:
+        current_app.logger.info("Adding journal column to reading_days")
+        db.session.execute(db.text("ALTER TABLE reading_days ADD COLUMN journal TEXT"))
+        db.session.commit()
 
 
 def _register_security_headers(app: Flask) -> None:

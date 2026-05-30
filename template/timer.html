@@ -225,6 +225,10 @@
             <span class="material-symbols-outlined text-[20px]">local_fire_department</span>
             <span class="font-label-lg">Chuỗi ngày</span>
         </a>
+        <a href="leaderboard.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+            <span class="font-label-lg">Xếp hạng</span>
+        </a>
     </nav>
 </div>
 </header>
@@ -271,6 +275,24 @@
     <div class="flex flex-col gap-3">
       <button id="cancel-confirm-btn" type="button" class="w-full bg-error text-white font-label-lg py-3 rounded-full hover:bg-error/90 transition-all active:scale-95">Tôi chắc chắn</button>
       <button id="cancel-dismiss-btn" type="button" class="w-full bg-surface-container-high text-on-surface font-label-lg py-3 rounded-full hover:bg-surface-container-highest transition-all active:scale-95">Tôi không muốn</button>
+    </div>
+  </div>
+</div>
+
+<!-- Journal Popup (shown after timer completes) -->
+<div id="journal-popup" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+  <div class="bg-surface rounded-2xl shadow-2xl p-8 mx-4 max-w-lg w-full border border-outline-variant/20">
+    <span class="material-symbols-outlined text-5xl text-primary mb-4 block text-center" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+    <p class="font-headline-md text-on-surface mb-2 text-center">Ghi lại cảm nhận của bạn</p>
+    <p class="font-body-md text-on-surface-variant mb-6 text-center">Hãy viết 1-2 đoạn về cuốn sách bạn vừa đọc hôm nay (ít nhất 30 từ) để ghi nhận chuỗi.</p>
+    <textarea id="journal-input" class="w-full border border-outline-variant rounded-xl p-4 font-body-md text-on-surface bg-surface-container-low resize-none focus:outline-none focus:ring-2 focus:ring-primary-container" rows="6" placeholder="Hôm nay tôi đã đọc..."></textarea>
+    <div class="flex justify-between items-center mt-3 mb-6">
+      <span id="journal-word-count" class="font-label-sm text-on-surface-variant">0 / 30 từ</span>
+      <span id="journal-word-error" class="font-label-sm text-error hidden">Cần ít nhất 30 từ</span>
+    </div>
+    <div class="flex flex-col gap-3">
+      <button id="journal-submit-btn" type="button" disabled class="w-full bg-surface-container-high text-on-surface-variant font-label-lg py-3 rounded-full cursor-not-allowed">Xác nhận</button>
+      <button id="journal-skip-btn" type="button" class="w-full bg-surface-container-high text-on-surface font-label-lg py-3 rounded-full hover:bg-surface-container-highest transition-all active:scale-95">Bỏ qua</button>
     </div>
   </div>
 </div>

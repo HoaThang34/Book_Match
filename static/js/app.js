@@ -381,7 +381,7 @@
     }
   }
 
-  var timerState = { seconds: 0, total: 900, running: false, interval: null, startedAt: null };
+  var timerState = { seconds: 0, total: 900, running: false, interval: null, startedAt: null, completed: false };
 
   function updateTimerUI(display, ring) {
     const s = timerState.seconds;
@@ -415,12 +415,8 @@
       if (timerState.seconds <= 0) {
         clearInterval(timerState.interval);
         timerState.running = false;
-        var minutes = Math.ceil(timerState.total / 60);
-        try {
-          var _res = await api.post("/api/user/timer/complete", { minutes: minutes });
-          if (_res.ok) { alert(_res.data.message || "Hoàn thành!"); window.location.href = "mission.html"; }
-          else alert(_res.data.error || "Chưa đủ thời gian.");
-        } catch (err) { alert(err.message || "Loi"); }
+        timerState.completed = true;
+        document.getElementById("journal-popup")?.classList.remove("hidden");
       }
     }, 200);
   }
@@ -477,6 +473,64 @@
           document.getElementById("cancel-popup").classList.add("hidden");
         });
       }
+
+      var journalInput = document.getElementById("journal-input");
+      var journalWordCount = document.getElementById("journal-word-count");
+      var journalWordError = document.getElementById("journal-word-error");
+      var journalSubmitBtn = document.getElementById("journal-submit-btn");
+      var journalSkipBtn = document.getElementById("journal-skip-btn");
+
+      if (journalInput && journalWordCount) {
+        journalInput.addEventListener("input", function () {
+          var text = journalInput.value.trim();
+          var words = text ? text.split(/\s+/).length : 0;
+          journalWordCount.textContent = words + " / 30 tu";
+          if (words >= 30) {
+            journalSubmitBtn.disabled = false;
+            journalSubmitBtn.className = "w-full bg-primary-container text-on-primary-container font-label-lg py-3 rounded-full hover:bg-primary transition-all active:scale-95";
+            if (journalWordError) journalWordError.classList.add("hidden");
+          } else {
+            journalSubmitBtn.disabled = true;
+            journalSubmitBtn.className = "w-full bg-surface-container-high text-on-surface-variant font-label-lg py-3 rounded-full cursor-not-allowed";
+          }
+        });
+      }
+
+      if (journalSubmitBtn) {
+        journalSubmitBtn.addEventListener("click", async function () {
+          var text = journalInput ? journalInput.value.trim() : "";
+          var words = text ? text.split(/\s+/).length : 0;
+          if (words < 30) {
+            if (journalWordError) journalWordError.classList.remove("hidden");
+            return;
+          }
+          journalSubmitBtn.disabled = true;
+          journalSubmitBtn.textContent = "Dang xu ly...";
+          var minutes = Math.ceil(timerState.total / 60);
+          try {
+            var _res = await api.post("/api/user/timer/complete", { minutes: minutes, journal: text });
+            if (_res.ok) {
+              document.getElementById("journal-popup")?.classList.add("hidden");
+              window.location.href = "mission.html";
+            } else {
+              alert(_res.data.error || "Loi");
+              journalSubmitBtn.disabled = false;
+              journalSubmitBtn.textContent = "Xac nhan";
+            }
+          } catch (err) {
+            alert(err.message || "Loi");
+            journalSubmitBtn.disabled = false;
+            journalSubmitBtn.textContent = "Xac nhan";
+          }
+        });
+      }
+
+      if (journalSkipBtn) {
+        journalSkipBtn.addEventListener("click", function () {
+          document.getElementById("journal-popup")?.classList.add("hidden");
+          window.location.href = "mission.html";
+        });
+      }
     } catch (e) {
       if (e.status === 401) window.location.href = "login.html";
     }
@@ -528,6 +582,46 @@
     try { await load(); } catch (e) { if (e.status === 401) window.location.href = "login.html"; }
   }
 
+  async function initLeaderboard() {
+    var list = document.getElementById("leaderboard-list");
+    var loading = document.getElementById("leaderboard-loading");
+    var errEl = document.getElementById("leaderboard-error");
+    var emptyEl = document.getElementById("leaderboard-empty");
+    var podium = document.getElementById("podium-section");
+    if (!list) return;
+    try {
+      var _r = await api.get("/api/user/leaderboard");
+      if (!_r.ok) throw new Error(_r.data.error || "Loi");
+      var entries = _r.data.leaderboard || [];
+      if (loading) loading.classList.add("hidden");
+      if (entries.length === 0) {
+        if (emptyEl) emptyEl.classList.remove("hidden");
+        return;
+      }
+      var top3 = entries.slice(0, 3);
+      var medals = ["emoji_events", "military_tech", "workspace_premium"];
+      var medalColors = ["text-amber-400", "text-slate-400", "text-amber-700"];
+      var bgColors = ["bg-amber-50 border-amber-200", "bg-slate-50 border-slate-200", "bg-orange-50 border-orange-200"];
+      if (podium) {
+        podium.classList.remove("hidden");
+        podium.querySelector("div").innerHTML = top3.map(function (e, i) {
+          var h = i === 0 ? "h-32" : i === 1 ? "h-24" : "h-20";
+          return '<div class="flex flex-col items-center gap-2 w-1/3"><div class="' + medalColors[i] + '"><span class="material-symbols-outlined text-4xl" style="font-variation-settings: \'FILL\' 1;">' + medals[i] + '</span></div><div class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md shadow-md border-2 border-white">' + e.initials + '</div><p class="font-label-sm text-center text-on-surface leading-tight mt-1">' + escapeHtml(e.full_name) + '</p><p class="font-label-lg text-primary-container font-bold">' + e.current_streak + ' ngày</p></div>';
+        }).join("");
+      }
+      list.classList.remove("hidden");
+      list.innerHTML = entries.map(function (e, i) {
+        var rankClass = i < 3 ? medalColors[i] + " font-bold" : "text-on-surface-variant";
+        var rankBg = i < 3 ? "bg-primary-container/10" : "";
+        return '<div class="flex items-center gap-3 bg-surface-container-lowest rounded-xl p-3 md:p-4 shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow"><div class="flex-shrink-0 w-8 text-center font-label-lg ' + rankClass + '">#' + e.rank + '</div><div class="w-10 h-10 rounded-full bg-primary-container/20 text-primary-container flex items-center justify-center font-label-sm font-bold text-sm">' + e.initials + '</div><div class="flex-grow min-w-0"><p class="font-label-sm text-on-surface truncate">' + escapeHtml(e.full_name) + '</p><div class="flex gap-3 text-xs text-on-surface-variant mt-1"><span>🔥 ' + e.current_streak + ' ngày</span><span>⏱ ' + e.total_read_minutes + ' phút</span><span>⭐ ' + e.xp + ' XP</span></div></div></div>';
+      }).join("");
+    } catch (e) {
+      if (loading) loading.classList.add("hidden");
+      if (e.status === 401) { if (emptyEl) emptyEl.classList.remove("hidden"); return; }
+      if (errEl) { errEl.textContent = e.message || "Không thể tải bảng xếp hạng."; errEl.classList.remove("hidden"); }
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     loadHeaderStreak();
     applyPendingProfile();
@@ -537,5 +631,6 @@
     if (page === "mission") initMissions();
     if (page === "timer") initTimer();
     if (page === "streak") initStreak();
+    if (page === "leaderboard") initLeaderboard();
   });
 })();

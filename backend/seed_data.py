@@ -1,11 +1,14 @@
+from datetime import datetime, timezone
+
 from backend.extensions import db
-from backend.models import Badge, Challenge, Mission
+from backend.models import Badge, Challenge, Mission, User, UserStats
 
 
 def seed_catalog():
     _seed_missions()
     _seed_challenges()
     _seed_badges()
+    _seed_leaderboard_users()
     db.session.commit()
 
 
@@ -85,3 +88,44 @@ def _seed_badges():
                 sort_order=row[5],
             )
         )
+
+
+def _seed_leaderboard_users():
+    if User.query.filter(User.email.like("%@bookmatch.vn")).count() > 0:
+        return
+    from backend.auth_service import hash_password
+    password = hash_password("Reader@123")
+    fake_users = [
+        ("Nguyễn Văn An", 120, 150, 4800, 12800),
+        ("Trần Thị Bình", 89, 95, 3600, 9600),
+        ("Lê Hoàng Cường", 65, 80, 2400, 7200),
+        ("Phạm Minh Đức", 45, 60, 1800, 5400),
+        ("Hoàng Thị Em", 30, 45, 1200, 3800),
+        ("Vũ Quốc Huy", 21, 30, 900, 2500),
+        ("Đặng Thanh Hương", 18, 25, 750, 2100),
+        ("Bùi Thị Hồng", 14, 20, 600, 1800),
+        ("Đỗ Văn Khanh", 10, 15, 450, 1200),
+        ("Ngô Thị Lan", 7, 12, 300, 800),
+        ("Dương Văn Minh", 5, 8, 200, 600),
+        ("Hồ Thị Ngọc", 3, 5, 100, 300),
+        ("Mai Văn Phúc", 1, 3, 50, 150),
+        ("Lý Thị Quyên", 1, 2, 30, 100),
+    ]
+    now = datetime.now(timezone.utc)
+    for i, (name, streak, longest, minutes, xp) in enumerate(fake_users, 1):
+        email = f"reader{i}@bookmatch.vn"
+        user = User(
+            email=email,
+            password_hash=password,
+            full_name=name,
+            created_at=now,
+        )
+        db.session.add(user)
+        db.session.flush()
+        db.session.add(UserStats(
+            user_id=user.id,
+            current_streak=streak,
+            longest_streak=longest,
+            total_read_minutes=minutes,
+            xp=xp,
+        ))

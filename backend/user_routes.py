@@ -13,7 +13,7 @@ from backend.gamification_service import (
     increment_mission_manual,
     stats_to_dict,
 )
-from backend.models import UserProfile
+from backend.models import User, UserProfile, UserStats
 
 user_bp = Blueprint("user", __name__, url_prefix="/api/user")
 
@@ -157,9 +157,10 @@ def timer_complete():
         return jsonify({"error": "Thời gian không hợp lệ."}), 400
     if minutes < 1:
         return jsonify({"error": "Thời gian không hợp lệ."}), 400
-    result = complete_timer_session(user_id, minutes)
+    journal = (data.get("journal") or "").strip()
+    result = complete_timer_session(user_id, minutes, journal)
     if "error" in result:
-        status = 400 if "phút" in result["error"] else 409
+        status = 400
         return jsonify(result), status
     return jsonify(result)
 
@@ -181,3 +182,28 @@ def streak():
     year = year or now.year
     month = month or now.month
     return jsonify(get_streak_payload(user_id, year, month))
+
+
+@user_bp.get("/leaderboard")
+def leaderboard():
+    rows = (
+        db.session.query(User, UserStats)
+        .join(UserStats, User.id == UserStats.user_id)
+        .order_by(UserStats.current_streak.desc(), UserStats.total_read_minutes.desc())
+        .limit(50)
+        .all()
+    )
+    entries = []
+    for rank, (user, stats) in enumerate(rows, 1):
+        initials = "".join(w[0].upper() for w in user.full_name.split() if w)[:2]
+        entries.append({
+            "rank": rank,
+            "user_id": user.id,
+            "full_name": user.full_name,
+            "initials": initials,
+            "current_streak": stats.current_streak or 0,
+            "longest_streak": stats.longest_streak or 0,
+            "total_read_minutes": stats.total_read_minutes or 0,
+            "xp": stats.xp or 0,
+        })
+    return jsonify({"leaderboard": entries, "total": len(entries)})

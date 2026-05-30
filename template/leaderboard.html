@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Book Match – Bảng xếp hạng</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fb",
+                        "primary-fixed-dim": "#ffb693",
+                        "tertiary-fixed": "#c2e8ff",
+                        "surface-container-high": "#dee8ff",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#c9bfff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d8e3fb",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#351000",
+                        "on-tertiary-fixed-variant": "#004d67",
+                        "on-surface": "#111c2d",
+                        "on-background": "#111c2d",
+                        "secondary-container": "#581cff",
+                        "inverse-primary": "#ffb693",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#f9f9ff",
+                        "primary": "#a04100",
+                        "tertiary-fixed-dim": "#75d1ff",
+                        "primary-container": "#ff6b00",
+                        "on-surface-variant": "#5a4136",
+                        "on-secondary-fixed-variant": "#4500d8",
+                        "outline": "#8e7164",
+                        "on-secondary-fixed": "#1b0063",
+                        "on-primary-container": "#572000",
+                        "inverse-surface": "#263143",
+                        "surface-tint": "#a04100",
+                        "inverse-on-surface": "#ecf1ff",
+                        "surface-dim": "#cfdaf2",
+                        "surface": "#f9f9ff",
+                        "secondary-fixed": "#e5deff",
+                        "outline-variant": "#e2bfb0",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f0f3ff",
+                        "primary-fixed": "#ffdbcc",
+                        "tertiary": "#006688",
+                        "secondary": "#4000cc",
+                        "on-tertiary-fixed": "#001e2b",
+                        "on-secondary-container": "#d4cbff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#003649",
+                        "tertiary-container": "#00a5d9",
+                        "on-primary-fixed-variant": "#7a3000",
+                        "on-secondary": "#ffffff",
+                        "background": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "64px",
+                        "md": "24px",
+                        "lg": "40px",
+                        "sm": "12px",
+                        "margin-desktop": "48px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "display-lg": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "body-md": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+  <style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+  </style>
+  <style data-stitch-cursor=""></style><style data-stitch-scroll-lock=""></style></head>
+<body class="bg-background text-on-background min-h-screen pb-40" data-page="leaderboard">
+<!-- TopAppBar -->
+<header class="bg-background/95 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant/10">
+<div class="flex flex-col md:flex-row items-center justify-between md:px-margin-mobile w-full max-w-[1200px] mx-auto relative">
+    <div class="flex items-center justify-between w-full h-16 px-4 md:px-0">
+        <h1 class="font-display font-bold text-xl text-primary">Book Match</h1>
+        <div class="flex items-center gap-3">
+            <div data-streak-badge onclick="window.location.href='streak.html'" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+                <span data-streak-text class="text-sm font-semibold text-primary">0 Days</span>
+                <span class="text-sm">✨</span>
+            </div>
+            <div onclick="window.location.href='login.html'" class="flex w-9 h-9 rounded-full bg-surface-variant border border-outline-variant items-center justify-center cursor-pointer hover:bg-surface-container transition-colors" title="Đăng xuất">
+                <span class="material-symbols-outlined text-[20px] text-on-surface-variant">person</span>
+            </div>
+        </div>
+    </div>
+    <nav class="flex md:absolute md:left-1/2 md:transform md:-translate-x-1/2 items-center gap-1 md:gap-2 w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0 px-4 md:px-0">
+        <a href="home.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            <span class="font-label-lg">Trang chủ</span>
+        </a>
+        <a href="mission.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">search</span>
+            <span class="font-label-lg">Khám phá</span>
+        </a>
+        <a href="timer.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">timer</span>
+            <span class="font-label-lg">Focus</span>
+        </a>
+        <a href="streak.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+            <span class="font-label-lg">Chuỗi ngày</span>
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-2 text-primary font-bold px-3 md:px-4 py-2 rounded-full bg-primary/10 transition-colors whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+            <span class="font-label-lg">Xếp hạng</span>
+        </a>
+    </nav>
+</div>
+</header>
+<main class="w-full max-w-[800px] mx-auto px-margin-mobile pt-32 md:pt-24 space-y-lg flex flex-col items-center">
+<!-- Header -->
+<section class="flex flex-col items-center justify-center text-center mt-md">
+<div class="relative inline-flex items-center justify-center mb-sm">
+<span class="material-symbols-outlined text-primary-container text-[80px]" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Bảng Xếp Hạng</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Xếp hạng chuỗi đọc của tất cả người dùng.</p>
+</section>
+<!-- Podium Top 3 -->
+<section id="podium-section" class="w-full hidden">
+<div class="flex items-end justify-center gap-4 mb-lg">
+</div>
+</section>
+<!-- Leaderboard List -->
+<section class="w-full">
+<div id="leaderboard-loading" class="text-center py-lg">
+<span class="ai-spinner text-primary inline-block w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+<p class="font-body-md text-on-surface-variant mt-3">Đang tải bảng xếp hạng...</p>
+</div>
+<div id="leaderboard-error" class="hidden text-center py-lg text-error font-body-md"></div>
+<div id="leaderboard-empty" class="hidden text-center py-lg">
+<span class="material-symbols-outlined text-5xl text-on-surface-variant mb-4">leaderboard</span>
+<p class="font-body-md text-on-surface-variant">Chưa có dữ liệu xếp hạng.</p>
+</div>
+<div id="leaderboard-list" class="hidden space-y-2"></div>
+</section>
+<div class="h-10"></div>
+</main>
+<!-- Bottom Mobile Nav -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface border-t border-outline-variant/20 z-50 px-2 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+    <div class="flex items-center justify-around h-[72px]">
+        <a href="home.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">home</span>
+            <span class="text-[11px] font-medium mt-1">Trang chủ</span>
+        </a>
+        <a href="mission.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">search</span>
+            <span class="text-[11px] font-medium mt-1">Khám phá</span>
+        </a>
+        <a href="timer.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">timer</span>
+            <span class="text-[11px] font-medium mt-1">Focus</span>
+        </a>
+        <a href="streak.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">local_fire_department</span>
+            <span class="text-[11px] font-medium mt-1">Chuỗi ngày</span>
+        </a>
+        <a href="leaderboard.html" class="flex flex-col items-center justify-center w-16 h-full text-primary">
+            <span class="material-symbols-outlined text-[24px] icon-fill">leaderboard</span>
+            <span class="text-[11px] font-semibold mt-1">Xếp hạng</span>
+        </a>
+    </div>
+</nav>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
+</body></html>
