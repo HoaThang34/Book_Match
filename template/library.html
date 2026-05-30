@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Thư viện - Book Match</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-container-highest": "#d8e3fb",
+        "tertiary-container": "#00a5d9",
+        "primary-container": "#ff6b00",
+        "on-tertiary-fixed": "#001e2b",
+        "primary": "#a04100",
+        "secondary-fixed": "#e5deff",
+        "surface-dim": "#cfdaf2",
+        "on-background": "#111c2d",
+        "secondary-container": "#581cff",
+        "inverse-surface": "#263143",
+        "surface-variant": "#d8e3fb",
+        "on-primary": "#ffffff",
+        "tertiary-fixed-dim": "#75d1ff",
+        "error": "#ba1a1a",
+        "primary-fixed": "#ffdbcc",
+        "on-surface-variant": "#5a4136",
+        "background": "#f9f9ff",
+        "on-primary-container": "#572000",
+        "primary-fixed-dim": "#ffb693",
+        "tertiary-fixed": "#c2e8ff",
+        "surface-container-high": "#dee8ff",
+        "outline": "#8e7164",
+        "inverse-on-surface": "#ecf1ff",
+        "on-secondary-fixed-variant": "#4500d8",
+        "outline-variant": "#e2bfb0",
+        "on-surface": "#111c2d",
+        "tertiary": "#006688",
+        "surface-tint": "#a04100",
+        "surface-container-low": "#f0f3ff",
+        "surface": "#f9f9ff",
+        "on-secondary-container": "#d4cbff",
+        "on-primary-fixed": "#351000",
+        "error-container": "#ffdad6",
+        "on-error": "#ffffff",
+        "inverse-primary": "#ffb693",
+        "secondary-fixed-dim": "#c9bfff",
+        "on-primary-fixed-variant": "#7a3000",
+        "surface-bright": "#f9f9ff",
+        "surface-container": "#e7eeff",
+        "on-tertiary-container": "#003649",
+        "on-tertiary": "#ffffff",
+        "on-error-container": "#93000a",
+        "on-secondary-fixed": "#1b0063",
+        "surface-container-lowest": "#ffffff",
+        "on-tertiary-fixed-variant": "#004d67",
+        "secondary": "#4000cc",
+        "on-secondary": "#ffffff"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "xl": "64px",
+        "md": "24px",
+        "lg": "40px",
+        "sm": "12px",
+        "margin-desktop": "48px",
+        "xs": "4px",
+        "margin-mobile": "16px",
+        "base": "8px",
+        "gutter": "24px"
+      },
+      "fontFamily": {
+        "label-sm": ["Montserrat"],
+        "headline-lg-mobile": ["Montserrat"],
+        "label-lg": ["Montserrat"],
+        "display-lg": ["Montserrat"],
+        "body-lg": ["Montserrat"],
+        "headline-lg": ["Montserrat"],
+        "headline-md": ["Montserrat"],
+        "body-md": ["Montserrat"]
+      },
+      "fontSize": {
+        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+      }
+    }
+  }
+}
+</script>
+<style>
+body { min-height: max(884px, 100dvh); }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+@keyframes ai-spin { to { transform: rotate(360deg); } }
+.ai-spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid currentColor; border-top-color: transparent; border-radius: 50%; animation: ai-spin 0.8s linear infinite; flex-shrink: 0; }
+</style>
+</head>
+<body class="bg-background text-on-background antialiased pb-32" data-page="library">
+<!-- TopAppBar -->
+<header class="bg-background/95 fixed top-0 w-full z-50 backdrop-blur-md border-b border-outline-variant/10">
+<div class="flex flex-col md:flex-row items-center justify-between md:px-margin-mobile w-full max-w-[1200px] mx-auto relative">
+    <div class="flex items-center justify-between w-full h-16 px-4 md:px-0">
+        <h1 class="font-display font-bold text-xl text-primary">Book Match</h1>
+        <div class="flex items-center gap-3">
+            <div data-streak-badge onclick="window.location.href='streak.html'" class="flex items-center gap-2 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+                <span data-streak-text class="text-sm font-semibold text-primary">0 Days</span>
+                <span class="text-sm">✨</span>
+            </div>
+            <div onclick="window.location.href='login.html'" class="flex w-9 h-9 rounded-full bg-surface-variant border border-outline-variant items-center justify-center cursor-pointer hover:bg-surface-container transition-colors" title="Đăng xuất">
+                <span class="material-symbols-outlined text-[20px] text-on-surface-variant">person</span>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation (Desktop) -->
+    <nav class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-2 w-auto overflow-x-auto no-scrollbar pb-0 px-0">
+        <a href="home.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            <span class="font-label-lg">Trang chủ</span>
+        </a>
+        <a href="library.html" class="flex items-center gap-2 text-primary font-bold px-3 md:px-4 py-2 rounded-full bg-primary/10 transition-colors whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">library_books</span>
+            <span class="font-label-lg">Thư viện</span>
+        </a>
+        <a href="mission.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">search</span>
+            <span class="font-label-lg">Khám phá</span>
+        </a>
+        <a href="timer.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">timer</span>
+            <span class="font-label-lg">Focus</span>
+        </a>
+        <a href="streak.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+            <span class="font-label-lg">Chuỗi ngày</span>
+        </a>
+        <a href="leaderboard.html" class="flex items-center gap-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors px-3 md:px-4 py-2 rounded-full whitespace-nowrap">
+            <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+            <span class="font-label-lg">Xếp hạng</span>
+        </a>
+    </nav>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-[1200px] mx-auto px-margin-mobile pt-28 space-y-md">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between pt-4 pb-2 gap-4 md:gap-0">
+        <h2 class="font-headline-lg-mobile md:text-headline-lg text-on-surface">Thư viện sách</h2>
+        <div class="flex flex-wrap items-center gap-2">
+            <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                <input id="library-search" type="text" placeholder="Tìm sách..." class="w-full md:w-64 pl-10 pr-4 py-2 rounded-full bg-surface-container border border-outline-variant/30 text-on-surface font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container">
+            </div>
+        </div>
+    </div>
+    <!-- Category Pills -->
+    <div id="category-pills" class="flex gap-2 overflow-x-auto no-scrollbar pb-1"></div>
+    <!-- Loading -->
+    <div id="library-loading" class="flex items-center gap-3 py-8">
+        <span class="ai-spinner text-primary"></span>
+        <span class="font-body-md text-on-surface-variant">Đang tải thư viện...</span>
+    </div>
+    <!-- Error -->
+    <p id="library-error" class="hidden text-error font-body-md"></p>
+    <!-- Books Grid -->
+    <div id="books-container" class="space-y-xl"></div>
+    <!-- Empty State -->
+    <div id="library-empty" class="hidden flex flex-col items-center justify-center py-16 text-center">
+        <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">library_books</span>
+        <h3 class="font-headline-md text-on-surface mb-2">Không tìm thấy sách</h3>
+        <p class="font-body-md text-on-surface-variant mb-6 max-w-md">Thử thay đổi từ khóa tìm kiếm hoặc chọn thể loại khác.</p>
+    </div>
+</main>
+<!-- Book Detail Popup -->
+<div id="book-popup" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-surface rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-outline-variant/20">
+        <div class="sticky top-0 bg-surface z-10 flex items-center justify-between p-6 pb-4 border-b border-outline-variant/10">
+            <h3 id="popup-title" class="font-headline-md text-on-surface pr-4"></h3>
+            <button id="popup-close" type="button" class="flex-shrink-0 w-9 h-9 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+        <div class="px-6 py-4">
+            <div class="flex items-center gap-2 mb-4">
+                <span id="popup-category-icon" class="material-symbols-outlined text-primary-container text-[18px]"></span>
+                <span id="popup-category" class="font-label-sm text-on-surface-variant bg-surface-container px-3 py-1 rounded-full"></span>
+            </div>
+            <div id="popup-content" class="font-body-md text-on-surface leading-relaxed whitespace-pre-line"></div>
+        </div>
+    </div>
+</div>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface border-t border-outline-variant/20 z-50 px-2 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+    <div class="flex items-center justify-around h-[72px]">
+        <a href="home.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">home</span>
+            <span class="text-[11px] font-medium mt-1">Trang chủ</span>
+        </a>
+        <a href="library.html" class="flex flex-col items-center justify-center w-16 h-full text-primary">
+            <span class="material-symbols-outlined text-[24px] icon-fill">library_books</span>
+            <span class="text-[11px] font-semibold mt-1">Thư viện</span>
+        </a>
+        <a href="mission.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">search</span>
+            <span class="text-[11px] font-medium mt-1">Khám phá</span>
+        </a>
+        <a href="timer.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">timer</span>
+            <span class="text-[11px] font-medium mt-1">Focus</span>
+        </a>
+        <a href="streak.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">local_fire_department</span>
+            <span class="text-[11px] font-medium mt-1">Chuỗi ngày</span>
+        </a>
+        <a href="leaderboard.html" class="flex flex-col items-center justify-center w-16 h-full text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-[24px]">leaderboard</span>
+            <span class="text-[11px] font-medium mt-1">Xếp hạng</span>
+        </a>
+    </div>
+</nav>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/app.js"></script>
+</body></html>

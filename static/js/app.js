@@ -622,6 +622,173 @@
     }
   }
 
+  function bookCardHtml(b) {
+    var cat = b.category || {};
+    return (
+      '<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/30 hover:shadow-md transition-shadow cursor-pointer" data-book-id="' + b.id + '">' +
+      '<div class="p-6">' +
+      '<div class="flex items-center gap-2 mb-3">' +
+      '<span class="material-symbols-outlined text-primary-container text-[18px]">' + (cat.icon || "book") + '</span>' +
+      '<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">' + escapeHtml(cat.title || "Khác") + '</span>' +
+      '</div>' +
+      '<h3 class="font-headline-md text-on-surface mb-2">' + escapeHtml(b.title) + '</h3>' +
+      '<p class="font-body-md text-on-surface-variant line-clamp-3 text-sm">' + escapeHtml(b.description || "") + '</p>' +
+      '</div>' +
+      '</div>'
+    );
+  }
+
+  function sectionCardHtml(slug, title, icon, books) {
+    return (
+      '<section class="space-y-sm">' +
+      '<div class="flex items-center gap-2 mb-1">' +
+      '<span class="material-symbols-outlined text-primary-container text-[22px]">' + icon + '</span>' +
+      '<h3 class="font-headline-md text-on-surface">' + escapeHtml(title) + '</h3>' +
+      '<span class="font-label-sm text-on-surface-variant">(' + books.length + ')</span>' +
+      '</div>' +
+      '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sm">' +
+      books.map(bookCardHtml).join("") +
+      '</div></section>'
+    );
+  }
+
+  async function initLibrary() {
+    var container = document.getElementById("books-container");
+    var loading = document.getElementById("library-loading");
+    var errEl = document.getElementById("library-error");
+    var emptyEl = document.getElementById("library-empty");
+    var searchInput = document.getElementById("library-search");
+    var pillsEl = document.getElementById("category-pills");
+    var popup = document.getElementById("book-popup");
+    var popupTitle = document.getElementById("popup-title");
+    var popupCategory = document.getElementById("popup-category");
+    var popupCategoryIcon = document.getElementById("popup-category-icon");
+    var popupContent = document.getElementById("popup-content");
+    var popupClose = document.getElementById("popup-close");
+    if (!container) return;
+
+    var allBooks = [];
+    var selectedCategory = "";
+
+    function escapeHtmlContent(s) {
+      var d = document.createElement("div");
+      d.textContent = s || "";
+      return d.innerHTML;
+    }
+
+    function render() {
+      var q = searchInput ? searchInput.value.toLowerCase().trim() : "";
+      var filtered = allBooks.filter(function (b) {
+        if (selectedCategory && b.category.slug !== selectedCategory) return false;
+        if (q && b.title.toLowerCase().indexOf(q) === -1 && (b.description || "").toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        if (emptyEl) emptyEl.classList.remove("hidden");
+        return;
+      }
+      if (emptyEl) emptyEl.classList.add("hidden");
+
+      var cats = {};
+      filtered.forEach(function (b) {
+        var s = b.category.slug || "khac";
+        if (!cats[s]) cats[s] = { title: b.category.title || "Khác", icon: b.category.icon || "book", books: [] };
+        cats[s].books.push(b);
+      });
+
+      var catOrder = ["van-hoc", "kinh-te", "phat-trien", "khoa-hoc", "cong-nghe", "marketing", "ngon-ngu", "nghe-thuat", "truyen-tranh", "hoi-ky", "khac"];
+      var html = "";
+      catOrder.forEach(function (s) {
+        if (cats[s]) {
+          html += sectionCardHtml(s, cats[s].title, cats[s].icon, cats[s].books);
+        }
+      });
+      container.innerHTML = html;
+
+      container.querySelectorAll("[data-book-id]").forEach(function (el) {
+        el.addEventListener("click", function () {
+          var id = parseInt(el.getAttribute("data-book-id"), 10);
+          openBookDetail(id);
+        });
+      });
+    }
+
+    async function openBookDetail(id) {
+      if (!popup) return;
+      popupTitle.textContent = "Đang tải...";
+      popupContent.textContent = "";
+      popup.classList.remove("hidden");
+      try {
+        var _ref = await api.get("/api/library/" + id);
+        if (!_ref.ok) throw new Error(_ref.data.error || "Lỗi");
+        var book = _ref.data.book;
+        var content = _ref.data.content || "";
+        popupTitle.textContent = book.title;
+        if (popupCategory) popupCategory.textContent = book.category.title;
+        if (popupCategoryIcon) popupCategoryIcon.textContent = book.category.icon || "book";
+        popupContent.textContent = content;
+      } catch (e) {
+        popupContent.textContent = e.message || "Không thể tải nội dung sách.";
+      }
+    }
+
+    if (popupClose) {
+      popupClose.addEventListener("click", function () {
+        popup.classList.add("hidden");
+      });
+      popup.addEventListener("click", function (e) {
+        if (e.target === popup) popup.classList.add("hidden");
+      });
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener("input", function () { render(); });
+    }
+
+    function renderPills(categories) {
+      if (!pillsEl) return;
+      var html = '<button data-cat="" class="pill px-4 py-1.5 rounded-full font-label-sm transition-colors ' + (selectedCategory === "" ? "bg-primary text-on-primary" : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high") + '">Tất cả</button>';
+      categories.forEach(function (c) {
+        var active = selectedCategory === c.slug;
+        html += '<button data-cat="' + c.slug + '" class="pill px-4 py-1.5 rounded-full font-label-sm transition-colors flex items-center gap-1.5 whitespace-nowrap ' + (active ? "bg-primary text-on-primary" : "bg-surface-container text-on-surface-variant hover:bg-surface-container-high") + '">' +
+          '<span class="material-symbols-outlined text-[16px]">' + c.icon + '</span>' +
+          c.title +
+        '</button>';
+      });
+      pillsEl.innerHTML = html;
+      pillsEl.querySelectorAll("[data-cat]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          selectedCategory = btn.getAttribute("data-cat");
+          renderPills(categories);
+          render();
+        });
+      });
+    }
+
+    try {
+      var _res = await api.get("/api/library");
+      if (!_res.ok) throw new Error(_res.data.error || "Lỗi");
+      allBooks = _res.data.books || [];
+      if (loading) loading.classList.add("hidden");
+      if (allBooks.length === 0) {
+        if (emptyEl) emptyEl.classList.remove("hidden");
+        return;
+      }
+      var _res2 = await api.get("/api/library/categories");
+      var categories = _res2.ok ? (_res2.data.categories || []) : [];
+      renderPills(categories);
+      render();
+    } catch (e) {
+      if (loading) loading.classList.add("hidden");
+      if (errEl) {
+        errEl.textContent = e.message || "Không thể tải thư viện.";
+        errEl.classList.remove("hidden");
+      }
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     loadHeaderStreak();
     applyPendingProfile();
@@ -632,5 +799,6 @@
     if (page === "timer") initTimer();
     if (page === "streak") initStreak();
     if (page === "leaderboard") initLeaderboard();
+    if (page === "library") initLibrary();
   });
 })();

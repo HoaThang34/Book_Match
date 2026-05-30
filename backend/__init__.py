@@ -8,6 +8,7 @@ from backend.ai_routes import ai_bp
 from backend.auth_routes import auth_bp, register_jwt_handlers
 from backend.config import ROOT_DIR
 from backend.extensions import db, jwt, limiter
+from backend.library_routes import library_bp
 from backend.seed_data import seed_catalog
 from backend.user_routes import user_bp
 
@@ -21,6 +22,7 @@ ALLOWED_PAGES = {
     "mission",
     "streak",
     "leaderboard",
+    "library",
 }
 
 
@@ -52,6 +54,7 @@ def create_app() -> Flask:
     app.register_blueprint(auth_bp)
     app.register_blueprint(ai_bp)
     app.register_blueprint(user_bp)
+    app.register_blueprint(library_bp)
 
     _register_security_headers(app)
     _register_routes(app)
